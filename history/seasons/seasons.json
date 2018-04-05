@@ -1,0 +1,9 @@
+{
+ seasonsList:
+ [
+  { "file":"stat2017_2.json", "description":"Второе полугодие 2017"  },
+  { "file":"stat2016_2017.json", "description":"Второе полугодие 2016 и первое полугодие 2017"  },
+  { "file":"stat2016_1.json", "description":"Первое полугодие 2016"  },
+  { "file":"stat2015_2.json", "description":"Второе полугодие 2015"  },
+ ]
+}

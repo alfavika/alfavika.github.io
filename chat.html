@@ -1,0 +1,98 @@
+<html>
+
+<head>
+  <meta charset="windows-1251">
+  <title> Альфа-хаб : викторина онлайн чат </title>
+  
+  <meta name="description" content="Альфа-хаб : викторина онлайн чат">
+  <meta name="keywords" content="викторина, онлайн, чат, игра, интеллектуальная, многопользовательская, интерактивная, играть бесплатно, quiz">
+  
+<script type="text/javascript" src="chat00/jquery-1.10.2.min.js"></script>
+<script type="text/javascript" src="chat00/chat15.js"></script>
+<script> apihost = "http://alfy.no-ip.org/"; </script>
+<link rel="stylesheet" href="chat00/chat15.css" />
+<script type="text/javascript" src="chat00/userslist15.js"></script>
+<script type="text/javascript" src="chat00/menumaker15.js"></script>
+
+</head>
+
+<body onload="onLoadProc();" class="bodyStyleD00" >
+
+<!-- Панелька авторизации -->
+<div id="PanelAuth" style="position:fixed; right:20px; border-radius:8px;z-index:2000; background-color: #00AA00;"> 
+	<input type="text" autocomplete="off" name="nick" id="nick" value="" placeholder="Ник" > 
+	<input type="password" autocomplete="off" name="pass" id="pass" value="" placeholder="Пароль (для зарегистрированных)"> 
+	<input type="button" name="ButtonAuth" id="ButtonAuth" value="Войти"> 
+	<input type="button" name="ButtonQuit" id="ButtonQuit" value="Выйти" style="display:none;"> 
+</div>
+
+<!-- Верхняя панель управления с меню и другими инструментами -->
+<div id="rule" style="width:100%;height:4%; float:left; background-color: #BBFFBB;" > 
+	<div class="horizontalcssmenu" style="z-index:1000000; float:left; display:block;" >
+		<ul id="cssmenu1"> </ul>
+		<br style="clear: left;" />
+	</div>
+	&nbsp;
+	<select id="StSel" size="1" >
+		<option disabled>Выберите стиль</option>
+		<option selected value="Normal">Обычный</option>
+		<option value="Twix">Полосы</option>
+		<option value="DarkSusl">Тёмный</option>
+		<option value="DcStyle">DC-стиль</option>
+	</select>
+	<input type="CheckBox" id="ChBxScr" checked="checked" align="right" title="Автоматичесая прокрутка чата при появлении новых сообщений"> прокрутка </input>
+	<span id="authansw" style="font-style:italic;color:gray"> Альфа-хаб: чат - викторина онлайн </span>
+</div>
+
+<div id="chatdiv" style="width:90%;height:86%; float:left; overflow-y:scroll; padding-bottom:8; font-size:12px; word-wrap: break-word;"> 
+	<div id="hellodiv" style="width:50%; margin-left:25%;" >
+		<center>
+		<br> Вы попали на веб-версию чат-викторины Альфа-хаба. 
+		<br> Чтобы войти, введите ник в верхнем правом углу страницы.
+		<br> Зарегистрированные пользователи должны также указать пароль.
+		<br>
+		<br> В случае проблем со входом на хаб, просьба сообщать о них на почту alfy@inbox.ru или в контакт - https://vk.com/dark_alf
+		<br> (но сначала попробуйте полностью обновить страницу браузера, обычно это Ctrl+F5)
+		</center>
+	</div>
+</div>
+
+<div id="scena" class="dw" style=" background-color: #E0FFFF; width:auto; right:12%; top:6%; position:absolute; padding:8px; min-width:50%; max-width:80%; display:none; " >
+	<p id="themediv" style=" background-color:yellow; display:block;">Тема</p>
+	<div id="quesdiv" ></div>
+</div>
+
+<div id="reportdiv" style="background-color: #BBFFBB; position:absolute; width:80%; right:15%; top:6%;  padding:8px; min-width:50%; max-width:80%; border: 1px solid #000000; display:none;" >
+	Форма отправки сообщения об ошибке или замечания к вопросу регулярной викторины: <br>
+	<input type="text" id="repques" value="" placeholder="Исходный текст вопроса" autocomplete="off" style="width:100%;"> <br>
+	<input type="text" id="repremark" value="" placeholder="Ваши замечания к вопросу" autocomplete="off" style="width:100%;"> <br>
+	<div align="right">
+		<input type="button" id="repsend" value="Отправить" style="width:8%;" onclick="sm('!trivreport '+document.getElementById('repques').value + 'ГГГ' + document.getElementById('repremark').value); document.getElementById('repques').value = document.getElementById('repremark').value = ''; document.getElementById('reportdiv').style.display='none';"> 
+		<input type="button" id="repclose" value="Отмена" style="width:8%;" onclick="document.getElementById('repques').value = document.getElementById('repremark').value = ''; document.getElementById('reportdiv').style.display='none'; ">
+	</div>
+</div>
+
+<!-- здесь был простейший вариант отображения чата:
+<TEXTAREA id="chatarea" ROWS=16  wrap="soft" spellcheck="false" style="width:100%;height:18%;font-family:Courier,monospace" readonly > </TEXTAREA> 
+-->
+
+<!-- радиопанель показывать по востребованию -->
+<div id="radiodiv" style="width:'auto'; right:12%; top:4%; position:absolute; display:none; " >
+	<audio style="width:'auto'; display:block;" src="http://alfavika.ru:10002/alf.mp3" preload="none" controls></audio>
+</div>
+
+<div id="sidebar" style="width:10%;height:86%; float:left; overflow-y:scroll; padding-bottom:8; font-size:12px;">
+	<div id="usersdiv" style="font-size:12px;" > </div>
+</div>
+
+<div id="sdiv" style="width:100%; height:4%; float:left;"> 
+	<input type="text" autocomplete="off" name="send" id="send" value="" placeholder="Сообщение для отправки" style="width:90%;">
+	<input type="button" name="ButtonSend" id="ButtonSend" disabled value="Отправить" style="width:8%;"> 
+</div>
+
+<footer style="font-size:75%; text-align:center; display:block; width:99%; height:4%;" >
+	<a href="http://alfavika.ru" target="_blank" title="Основной сайт Альфа-хаба">Основной сайт Альфа-хаба</a>
+</footer>
+
+</body>
+</html>

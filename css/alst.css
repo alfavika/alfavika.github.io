@@ -1,0 +1,82 @@
+/* all styles for alfavika site
+
+23.03.2018 - RealMaks supply;
+
+22.03.2018 - v0.1.0 by Alfy;
+
+*/
+
+.topMenuItem { /* пункт верхнего меню */
+	margin:8px;
+}
+
+/* RealMaks design */
+html {
+	font-family: Verdana;
+	/*background-image: url(/img/snowbackground.png);
+	background-attachment: fixed;*/
+}
+
+body {
+	margin: 10px;    
+}
+
+.divTopMenu { /* верхняя меню-панель */
+	background-color: #BFD2FF;
+	background-color: white;
+	padding: 10px;
+}
+
+.topMenuItem { /* переопределение пункта верхнего меню */
+	margin-bottom: 0px;
+	padding: 5px;
+}
+
+a { /* все ссылки */
+	color: #2986AD;
+	text-decoration: none;
+}
+
+a.topMenuItem { /* все ссылки в меню */
+	text-decoration: none;
+	color: #395739;
+	padding: 10px;
+}
+
+	a:hover.topMenuItem { /* ссылки меню при наведении курсора */
+		background-color: #0FBA48;
+		color: white;
+	}
+
+
+/* Alfy design */
+
+.spo { /* span-ы со спойлерами - всплывающими подсказками */
+	cursor:pointer;
+	color:blue;
+	cursor:help;
+}
+
+header a { /* тэг-ссылка для хедера */
+	text-decoration: none;
+	color:black;
+}
+
+header a:hover { /* вид ссылки хедера при наведении курсора */
+	text-decoration: underline;
+}
+
+header { /* заголовок (иногда с тэгами подзаголовка) */
+	background: linear-gradient(white, #BBFFBB);
+	text-align:center; 
+	font-size:95%; 
+	display:block; width:99%; 
+	padding: 5px;
+}
+
+footer { /* подвал (со служебной информацией */
+	background: linear-gradient(#BBFFBB, white);
+	text-align:center;
+	font-size:75%;  
+	display:block; width:99%; 
+}

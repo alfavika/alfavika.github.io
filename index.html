@@ -1,46 +1,87 @@
 ﻿<html>
+
 <head>
-	<title> Альфа-хаб </title>
-	<meta name="description" content="Альфа-хаб : чат-викторина онлайн">
-	<meta name="keywords" content="викторина, онлайн, чат, игра, интеллектуальная, многопользовательская, интерактивная, играть бесплатно, quiz">
+  <title>Альфа-хаб</title>
+  <meta charset="utf-8">
+  <meta name="description" content="Альфа-хаб : чат-викторина онлайн">
+  <meta name="keywords" content="викторина, онлайн, чат, игра, интеллектуальная, многопользовательская, интерактивная, играть бесплатно, quiz">
+  
+  <link type='text/css' rel='stylesheet' href='/css/alst.css'>
+
+<style>
+
+#enter:hover {
+  background-image: url(/img/bb.gif);
+}
+
+.divCenter {
+  display: inline-block;
+  margin-top:32px;
+  margin-bottom:4px;
+}
+
+.divCenter img {
+  border: 3px solid white;
+}
+
+  .divCenter:hover img  {
+    border: 3px solid #53da3f; /* Рамка при наведении на ссылку курсора мыши */
+  }
+
+</style>
+
 </head>
 
 <body>
-<center>
-<img src="img/alfavikalogo200x200.png" />
-<br>
-Вы попали на сайт Альфа-хаба.
-<br>
-<br>
-Что здесь можно сделать:
-<br><br>
 
-<a href="chat.html" target="_blank" title="Чат Альфа-хаба"> Попасть на чат Альфа-хаба </a>
-<br><br>
-
-<a href="http://alfavika.ru/chat.html" target="_blank" title="Чат Альфа-хаба"> Попасть на официальный чат Альфа-хаба</a>
-<br><br>
-
-<a href="http://alfavika.ucoz.ru/chat.html" target="_blank" title="Чат Альфа-хаба"> Попасть на зеркало чата Альфа-хаба на Ucoz-е</a>
-<br><br>
-
-<a href="http://alfavika.github.io/chat.html" target="_blank" title="Чат Альфа-хаба"> Попасть на зеркало чата Альфа-хаба на github-е (для разработчиков)</a>
-<br><br>
-
-<a href="http://dvorkin.by/chat.html" target="_blank" title="Чат Альфа-хаба"> Попасть на зеркало чата Альфа-хаба  на дружественном ресурсе DIgorevich-а </a>
-<br><br>
-
-<a href="http://dvorkin.by/Victorina/" target="_blank" > Скачать на сайте DIgorevich-а программу-клиент для игры в викторины (работает чуть быстрее, чем веб-версия) </a>
-<br><br>
-
-<br>
-<br>
-
-<div style="width:40%;margin auto">
-Испытать сервис от дружественного ресурса - <a href="http://kristinita.ru" target="_blank" > "Поиск Кристиниты" </a> это поисковый фильтр на движке Google Custom Search, позволяющий вам искать нужную информацию только в наборе доверенных источников (справочников, энциклопедий), подобранных опытным игроком интеллектуальных викторин.
+<div class="divTopMenu">
+<!--<a href="/"><img src="/img/menulogo.png" width="200" style="margin-bottom: -4px; margin-right: 24px;" title="На главную страницу" /></a>-->
+<!--<img src="/img/alfavikalogo200x200.png"/>-->
+<a href="/" class="topMenuItem">На главную</a>
+<a href="/blog/" class="topMenuItem">Блог</a>
+<a href="/tour/" class="topMenuItem">Турниры</a>
+<a href="/history/" class="topMenuItem">История</a>
+<a href="/about/rules.html" class="topMenuItem">Правила</a>
+<a href="/about/" class="topMenuItem">О ресурсе</a>
 </div>
 
-<br><br>
+<header>
+<h1>Альфа-хаб</h1>
+
+<p><span class="spo" title="Чат-викторина">Альфа-хаб</span> (он же проект "<span class="spo" title="Веб-ресурсы связанные с Альфа-хабом">alfavika</span>") - это неразрывный дуализм викторины и общения в чате.</p>
+<p> <a href="/about/rules.html" class="spo" title="На всякий случай прочитайте довольно очевидные правила">Викторина онлайн</a> - это многопользовательская интерактивная игра на эрудицию, происходящая в чате. Формально, задача игроков - ответы на постоянно задаваемые ботом по имени Vika вопросы. <span class="spo" title="Для большинства постоянных жителей хаба">Реально же</span>, чат-викторина - это место для общения и знакомств, где <span class="spo" title="в отличие от безликих ников и шаблонных анкет соцсетей">представление о человеке</span> можно получить, наблюдая за его <span class="spo" title="так или иначе отражающей структуру его интересов">игрой</span>. Также на хабе периодически проходят различные мероприятия - от небольших неформатных <span class="spo" title="по набору слов на скорость, сбору из набора букв, анаграммам и т.д.">игр со словами</span>, до масштабных викторинных <a href="/tour/" class="spo" title="собирающих множество игроков для ответов на нигде ранее не игравшиеся вопросы">турниров</a>.
+</p>
+</header>
+
+<center id="enter">
+<a href="chat.html" title="Погрузиться в чат Альфа-хаба прямо на этом сайте">
+    <div class="divCenter" >
+      <img src="/img/alfavikalogo200x200.png"/>
+      <h2 style="margin-top:-32px;">ВОЙТИ В ЧАТ</h2>
+    </div>
+</a>
 </center>
+
+<div>
+<p><h3>Другие способы попасть в чат:</h3></p>
+<p> Войти через старый сайт Альфа-хаба на укозе - <a href="http://alfavika.ucoz.ru/chat.html" target="_blank" title="Войти в чат Альфа-хаба через старый сайт на укозе">http://alfavika.ucoz.ru/chat.html</a> </p>
+<p> Войти через <span class="spo" title="место, где разрабатывается сайт">dev-версию</span> сайта Альфа-хаба на гитхабе - <a href="https://alfavika.github.io/chat.html" target="_blank" title="Войти в чат Альфа-хаба через dev-версию сайта (для разработчиков)">https://alfavika.github.io/chat.html</a> </p>
+<p> Войти через зеркало чата Альфа-хаба на дружественном ресурсе DIgorevich-а - <a href="http://dvorkin.by/chat.html" target="_blank" title="Войти в чат Альфа-хаба через зеркало на дружественном ресурсе DIgorevich-а"> http://dvorkin.by/chat.html</a> </p>
+<p>
+Скачать на сайте DIgorevich-а легковесную программу-клиент ViDi-DC, позволяющую входить на несколько чатов с викторинами, включая чат Альфа-хаба (работает быстрее, чем веб-интерфейс) - <a href="https://dvorkin.by/vidi-dc/" target="_blank" >https://dvorkin.by/vidi-dc/</a> </p>
+
+<p>Поклонники файлобменной сети DirectConnect (DC) могут попасть в чат по адресу Альфа-хаба в dc-сетях - <a href="dchub://alfy.no-ip.org" title="Эта ссылка откроется только при наличии установленного в системе dc-клиента">dchub://alfy.no-ip.org</a> , используя свои любимые dc-клиенты, такие как GreyLink, FlylinkDC++, EiskaltDC++ (кроссплатформ); но через них можно играть только в текстовые викторины, т.к. чаты dc-хабов изначально не были предназначены для показа изображений.</p>
+
+<p><h3>Альфа-хаб в соцсетях:</h3></p>
+Паблик Альфа-хаба в контакте - <a href="http://vk.com/alfavika" target="_blank">http://vk.com/alfavika</a> - сейчас основное место для анонсов и обсуждения событий, происходящих на Альфа-хабе.
+
+<p><i>Приведённые выше ссылки полезно знать, чтобы в случае технических проблем на сайте или хабе, можно было попробовать альтернативные способы входа или проверить информацию о текущем состоянии Альфа-хаба на страницах других ресурсов.</i></p>
+
+</div>
+
+<footer>
+    © 2014—2018 Alfy | <a href="/about/">О проекте</a> | <a href="http://alfavika.ru" title="Основной сайт Альфа-хаба">alfavika.ru</a> 
+</footer>
+
 </body>
 </html>
