@@ -1,15 +1,15 @@
-// Модуль динамического построения меню.
-// Требует наличия контейнера cssmenu1 и css-стилей меню;
-// управление размером шрифта определено для chatdiv;
-// для отправки команд должен быть определён метод window.sm;
-// точка входа - function initMenu().
+// РњРѕРґСѓР»СЊ РґРёРЅР°РјРёС‡РµСЃРєРѕРіРѕ РїРѕСЃС‚СЂРѕРµРЅРёСЏ РјРµРЅСЋ.
+// РўСЂРµР±СѓРµС‚ РЅР°Р»РёС‡РёСЏ РєРѕРЅС‚РµР№РЅРµСЂР° cssmenu1 Рё css-СЃС‚РёР»РµР№ РјРµРЅСЋ;
+// СѓРїСЂР°РІР»РµРЅРёРµ СЂР°Р·РјРµСЂРѕРј С€СЂРёС„С‚Р° РѕРїСЂРµРґРµР»РµРЅРѕ РґР»СЏ chatdiv;
+// РґР»СЏ РѕС‚РїСЂР°РІРєРё РєРѕРјР°РЅРґ РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ РѕРїСЂРµРґРµР»С‘РЅ РјРµС‚РѕРґ window.sm;
+// С‚РѕС‡РєР° РІС…РѕРґР° - function initMenu().
 
 
-/*  Функция построения меню по ul-списку внутри div-а с классом horizontalcssmenu.
-Взята с http://javascriptt.ru/menu20.html , не забываем подключать соответствующий css
+/*  Р¤СѓРЅРєС†РёСЏ РїРѕСЃС‚СЂРѕРµРЅРёСЏ РјРµРЅСЋ РїРѕ ul-СЃРїРёСЃРєСѓ РІРЅСѓС‚СЂРё div-Р° СЃ РєР»Р°СЃСЃРѕРј horizontalcssmenu.
+Р’Р·СЏС‚Р° СЃ http://javascriptt.ru/menu20.html , РЅРµ Р·Р°Р±С‹РІР°РµРј РїРѕРґРєР»СЋС‡Р°С‚СЊ СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‰РёР№ css
 */
 function initMenu(){
-	if(makeVikaMenu) makeVikaMenu(); //так почему-то писать нельзя
+	if(makeVikaMenu) makeVikaMenu(); //С‚Р°Рє РїРѕС‡РµРјСѓ-С‚Рѕ РїРёСЃР°С‚СЊ РЅРµР»СЊР·СЏ
 	
 	var cssmenuids=["cssmenu1"] //Enter id(s) of CSS Horizontal UL menus, separated by commas
 	var csssubmenuoffset=-1 //Offset of submenus from main menu. Default is 0 pixels.
@@ -20,7 +20,7 @@ function initMenu(){
 				ultags[t].style.top=ultags[t].parentNode.offsetHeight+csssubmenuoffset+"px"
 			var spanref=document.createElement("span")
 				spanref.className="arrowdiv"
-				spanref.innerHTML="    "
+				spanref.innerHTML="В В В В "
 				ultags[t].parentNode.getElementsByTagName("a")[0].appendChild(spanref)
 			ultags[t].parentNode.onmouseover=function(){
 						this.style.zIndex=1000000
@@ -41,7 +41,7 @@ function initMenu(){
 	createcssmenu2();
 }
 
-// добавляет раздел меню:
+// РґРѕР±Р°РІР»СЏРµС‚ СЂР°Р·РґРµР» РјРµРЅСЋ:
 function addSubMenu(mainmenu, sname, sid)
 {
 	var elm = document.createElement('li');
@@ -55,7 +55,7 @@ function addSubMenu(mainmenu, sname, sid)
 	return eul;
 }
 
-// добавляет в раздел пункт меню с явной js-командой:
+// РґРѕР±Р°РІР»СЏРµС‚ РІ СЂР°Р·РґРµР» РїСѓРЅРєС‚ РјРµРЅСЋ СЃ СЏРІРЅРѕР№ js-РєРѕРјР°РЅРґРѕР№:
 function addItem(submenu, sname, sjs)
 {
 	var elm = document.createElement('li');
@@ -63,7 +63,7 @@ function addItem(submenu, sname, sjs)
 	submenu.appendChild(elm);
 }
 
-// добавляет в раздел пункт меню с scom-командой и arg-аргументами:
+// РґРѕР±Р°РІР»СЏРµС‚ РІ СЂР°Р·РґРµР» РїСѓРЅРєС‚ РјРµРЅСЋ СЃ scom-РєРѕРјР°РЅРґРѕР№ Рё arg-Р°СЂРіСѓРјРµРЅС‚Р°РјРё:
 function addItemCom(submenu, sname, scom, arg1, arg2, arg3)
 {
 	var args = [arg1, arg2, arg3];
@@ -85,7 +85,7 @@ function addItemCom(submenu, sname, scom, arg1, arg2, arg3)
 			var adef = ais.def || "";
 			//var sarg = window.prompt(args[i], "");
 			var sarg = window.prompt(adesc, adef);
-			if(sarg==null) return; // отмена
+			if(sarg==null) return; // РѕС‚РјРµРЅР°
 			str = str+" "+sarg;
 		};
 		window.sm(str);
@@ -94,7 +94,7 @@ function addItemCom(submenu, sname, scom, arg1, arg2, arg3)
 	submenu.appendChild(elm);
 }
 
-// служебная функция изменяющая размер шрифта на заданную величину:
+// СЃР»СѓР¶РµР±РЅР°СЏ С„СѓРЅРєС†РёСЏ РёР·РјРµРЅСЏСЋС‰Р°СЏ СЂР°Р·РјРµСЂ С€СЂРёС„С‚Р° РЅР° Р·Р°РґР°РЅРЅСѓСЋ РІРµР»РёС‡РёРЅСѓ:
 function changeFont(element,step)
 {	step = parseInt(step,10);
 	var el = document.getElementById(element);
@@ -102,59 +102,59 @@ function changeFont(element,step)
 	el.style.fontSize = (curFont+step) + 'px';
 }
 
-// внимание, для работы этого меню должна быть определена глобальная функция window.sm для отправки в главный чат:
+// РІРЅРёРјР°РЅРёРµ, РґР»СЏ СЂР°Р±РѕС‚С‹ СЌС‚РѕРіРѕ РјРµРЅСЋ РґРѕР»Р¶РЅР° Р±С‹С‚СЊ РѕРїСЂРµРґРµР»РµРЅР° РіР»РѕР±Р°Р»СЊРЅР°СЏ С„СѓРЅРєС†РёСЏ window.sm РґР»СЏ РѕС‚РїСЂР°РІРєРё РІ РіР»Р°РІРЅС‹Р№ С‡Р°С‚:
 function makeVikaMenu()
 {
 	var mm = document.getElementById("cssmenu1");
 	var m;
 	
-	m = addSubMenu(mm, "Вы","you"); // you должен быть, по нему делается замена ника
-		addItem(m, "Моя статистика", "sm('!myscore');");
-		addItem(m, "Задать пароль", "setPswProc();");
+	m = addSubMenu(mm, "Р’С‹","you"); // you РґРѕР»Р¶РµРЅ Р±С‹С‚СЊ, РїРѕ РЅРµРјСѓ РґРµР»Р°РµС‚СЃСЏ Р·Р°РјРµРЅР° РЅРёРєР°
+		addItem(m, "РњРѕСЏ СЃС‚Р°С‚РёСЃС‚РёРєР°", "sm('!myscore');");
+		addItem(m, "Р—Р°РґР°С‚СЊ РїР°СЂРѕР»СЊ", "setPswProc();");
 		addItem(m, "--");
-		addItem(m, "Выйти", "squit();");
+		addItem(m, "Р’С‹Р№С‚Рё", "squit();");
 	
-	m = addSubMenu(mm, "Топы","idtops");
-		addItem(m, "По ответам", "sm('!answers');");
-		addItem(m, "По очкам", "sm('!scores');");
-		addItem(m, "По цепочкам", "sm('!strikes');");
-		addItem(m, "По дуэлям", "sm('!блицтоп');");
-		addItem(m, "По эффективности дуэлей", "sm('!эфтоп');");
-		addItem(m, "По рекордам скорости", "sm('!recordes');");
+	m = addSubMenu(mm, "РўРѕРїС‹","idtops");
+		addItem(m, "РџРѕ РѕС‚РІРµС‚Р°Рј", "sm('!answers');");
+		addItem(m, "РџРѕ РѕС‡РєР°Рј", "sm('!scores');");
+		addItem(m, "РџРѕ С†РµРїРѕС‡РєР°Рј", "sm('!strikes');");
+		addItem(m, "РџРѕ РґСѓСЌР»СЏРј", "sm('!Р±Р»РёС†С‚РѕРї');");
+		addItem(m, "РџРѕ СЌС„С„РµРєС‚РёРІРЅРѕСЃС‚Рё РґСѓСЌР»РµР№", "sm('!СЌС„С‚РѕРї');");
+		addItem(m, "РџРѕ СЂРµРєРѕСЂРґР°Рј СЃРєРѕСЂРѕСЃС‚Рё", "sm('!recordes');");
 	
-	m = addSubMenu(mm, "Словари","idtur");
-		addItemCom(m, "Драг (короткие руссские)", "!драг", {desc:"Количество слов драга? (5-10)", def:10});
-		addItemCom(m, "Драг (длинные руссские)", "!драгг", {desc:"Количество слов драга? (5-10)", def:10});
-		addItemCom(m, "Драг (английские)", "!drag", {desc:"Количество слов драга? (5-10)", def:10});
-		addItemCom(m, "Анаграммы", "!ana", {desc:"Количество Анаграмм? (5-10)", def:10});
-		addItemCom(m, "Англо-русский словарь", "!турнир engl-rus1.txt", {desc:"Количество заданий? (5-10)", def:10}, {value:"1"});
-		addItemCom(m, "Страны-столицы", "!турнир  страны-столицы.txt", {desc:"Количество заданий? (5-10)", def:10}, {value:"1"});
-		addItemCom(m, "Назвать&nbsp;страну&nbsp;по&nbsp;городу", "!турнир НазватьСтрануПоГороду.txt", {desc:"Количество заданий? (5-10)", def:10}, {value:"1"});
-		addItemCom(m, "Турнирные&nbsp;вопросы", "!турнир ТурнирныеВопросы.txt", {desc:"Количество заданий? (5-10)", def:10}, {value:"1"});
-		addItemCom(m, "Слова&nbsp;из&nbsp;слова&nbsp;(на&nbsp;скорость)", "!words", {desc:"Количество букв в базовом слове? (5-20)", def:10}, {desc:"Слова не меньше скольки букв?", def:2} );
-		addItemCom(m, "Слова&nbsp;из&nbsp;слова&nbsp;(скрытые)", "!hwords", {desc:"Количество букв в базовом слове? (5-20)", def:10}, {desc:"Слова не меньше скольки букв?", def:2} );
+	m = addSubMenu(mm, "РЎР»РѕРІР°СЂРё","idtur");
+		addItemCom(m, "Р”СЂР°Рі (РєРѕСЂРѕС‚РєРёРµ СЂСѓСЃСЃСЃРєРёРµ)", "!РґСЂР°Рі", {desc:"РљРѕР»РёС‡РµСЃС‚РІРѕ СЃР»РѕРІ РґСЂР°РіР°? (5-10)", def:10});
+		addItemCom(m, "Р”СЂР°Рі (РґР»РёРЅРЅС‹Рµ СЂСѓСЃСЃСЃРєРёРµ)", "!РґСЂР°РіРі", {desc:"РљРѕР»РёС‡РµСЃС‚РІРѕ СЃР»РѕРІ РґСЂР°РіР°? (5-10)", def:10});
+		addItemCom(m, "Р”СЂР°Рі (Р°РЅРіР»РёР№СЃРєРёРµ)", "!drag", {desc:"РљРѕР»РёС‡РµСЃС‚РІРѕ СЃР»РѕРІ РґСЂР°РіР°? (5-10)", def:10});
+		addItemCom(m, "РђРЅР°РіСЂР°РјРјС‹", "!ana", {desc:"РљРѕР»РёС‡РµСЃС‚РІРѕ РђРЅР°РіСЂР°РјРј? (5-10)", def:10});
+		addItemCom(m, "РђРЅРіР»Рѕ-СЂСѓСЃСЃРєРёР№ СЃР»РѕРІР°СЂСЊ", "!С‚СѓСЂРЅРёСЂ engl-rus1.txt", {desc:"РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РґР°РЅРёР№? (5-10)", def:10}, {value:"1"});
+		addItemCom(m, "РЎС‚СЂР°РЅС‹-СЃС‚РѕР»РёС†С‹", "!С‚СѓСЂРЅРёСЂ  СЃС‚СЂР°РЅС‹-СЃС‚РѕР»РёС†С‹.txt", {desc:"РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РґР°РЅРёР№? (5-10)", def:10}, {value:"1"});
+		addItemCom(m, "РќР°Р·РІР°С‚СЊ&nbsp;СЃС‚СЂР°РЅСѓ&nbsp;РїРѕ&nbsp;РіРѕСЂРѕРґСѓ", "!С‚СѓСЂРЅРёСЂ РќР°Р·РІР°С‚СЊРЎС‚СЂР°РЅСѓРџРѕР“РѕСЂРѕРґСѓ.txt", {desc:"РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РґР°РЅРёР№? (5-10)", def:10}, {value:"1"});
+		addItemCom(m, "РўСѓСЂРЅРёСЂРЅС‹Рµ&nbsp;РІРѕРїСЂРѕСЃС‹", "!С‚СѓСЂРЅРёСЂ РўСѓСЂРЅРёСЂРЅС‹РµР’РѕРїСЂРѕСЃС‹.txt", {desc:"РљРѕР»РёС‡РµСЃС‚РІРѕ Р·Р°РґР°РЅРёР№? (5-10)", def:10}, {value:"1"});
+		addItemCom(m, "РЎР»РѕРІР°&nbsp;РёР·&nbsp;СЃР»РѕРІР°&nbsp;(РЅР°&nbsp;СЃРєРѕСЂРѕСЃС‚СЊ)", "!words", {desc:"РљРѕР»РёС‡РµСЃС‚РІРѕ Р±СѓРєРІ РІ Р±Р°Р·РѕРІРѕРј СЃР»РѕРІРµ? (5-20)", def:10}, {desc:"РЎР»РѕРІР° РЅРµ РјРµРЅСЊС€Рµ СЃРєРѕР»СЊРєРё Р±СѓРєРІ?", def:2} );
+		addItemCom(m, "РЎР»РѕРІР°&nbsp;РёР·&nbsp;СЃР»РѕРІР°&nbsp;(СЃРєСЂС‹С‚С‹Рµ)", "!hwords", {desc:"РљРѕР»РёС‡РµСЃС‚РІРѕ Р±СѓРєРІ РІ Р±Р°Р·РѕРІРѕРј СЃР»РѕРІРµ? (5-20)", def:10}, {desc:"РЎР»РѕРІР° РЅРµ РјРµРЅСЊС€Рµ СЃРєРѕР»СЊРєРё Р±СѓРєРІ?", def:2} );
 		
-	m = addSubMenu(mm, "Блиц","idduels");
-		addItemCom(m, "Дуэль&nbsp;на&nbsp;знание", "!duel4", {desc:"До скольки ответов дуэль? (5-10)", def:10});
-		addItemCom(m, "Дуэль&nbsp;на&nbsp;скорость", "!duel1", {desc:"До скольки ответов дуэль? (5-10)", def:10});
-		addItemCom(m, "Дуэль&nbsp;на&nbsp;отрыв", "!duel2", {desc:"До скольки ответов отрыва? (3-5)", def:3});
+	m = addSubMenu(mm, "Р‘Р»РёС†","idduels");
+		addItemCom(m, "Р”СѓСЌР»СЊ&nbsp;РЅР°&nbsp;Р·РЅР°РЅРёРµ", "!duel4", {desc:"Р”Рѕ СЃРєРѕР»СЊРєРё РѕС‚РІРµС‚РѕРІ РґСѓСЌР»СЊ? (5-10)", def:10});
+		addItemCom(m, "Р”СѓСЌР»СЊ&nbsp;РЅР°&nbsp;СЃРєРѕСЂРѕСЃС‚СЊ", "!duel1", {desc:"Р”Рѕ СЃРєРѕР»СЊРєРё РѕС‚РІРµС‚РѕРІ РґСѓСЌР»СЊ? (5-10)", def:10});
+		addItemCom(m, "Р”СѓСЌР»СЊ&nbsp;РЅР°&nbsp;РѕС‚СЂС‹РІ", "!duel2", {desc:"Р”Рѕ СЃРєРѕР»СЊРєРё РѕС‚РІРµС‚РѕРІ РѕС‚СЂС‹РІР°? (3-5)", def:3});
 		addItem(m, "--");
-		addItem(m, "Принять вызов", "sm('!принимаю');");
+		addItem(m, "РџСЂРёРЅСЏС‚СЊ РІС‹Р·РѕРІ", "sm('!РїСЂРёРЅРёРјР°СЋ');");
 
-	m = addSubMenu(mm, "Инфо","idinfo");
-		addItem(m, "Правила&nbsp;хаба", "sm('!show rules');");
-		addItem(m, "Информер", "sm('!show informer');");
-		addItem(m, "Наши ссылки", "sm('!show links');");
+	m = addSubMenu(mm, "РРЅС„Рѕ","idinfo");
+		addItem(m, "РџСЂР°РІРёР»Р°&nbsp;С…Р°Р±Р°", "sm('!show rules');");
+		addItem(m, "РРЅС„РѕСЂРјРµСЂ", "sm('!show informer');");
+		addItem(m, "РќР°С€Рё СЃСЃС‹Р»РєРё", "sm('!show links');");
 		//addItem(m, "--");
-		addItem(m, "Топик", "sm('!show topic');");
+		addItem(m, "РўРѕРїРёРє", "sm('!show topic');");
 		addItem(m, "--");
-		addItem(m, "Вижу&nbsp;ошибку", "document.getElementById('reportdiv').style.display='block';");
+		addItem(m, "Р’РёР¶Сѓ&nbsp;РѕС€РёР±РєСѓ", "document.getElementById('reportdiv').style.display='block';");
 		
-	// а для работы этого меню, понятно, должен существовать элемент с id=TabContainer
-	m = addSubMenu(mm, "Вид","idvid");
-		addItem(m, "Шрифт крупнее", "changeFont('chatdiv',1);");
-		addItem(m, "Шрифт мельче", "changeFont('chatdiv',-1);");
+	// Р° РґР»СЏ СЂР°Р±РѕС‚С‹ СЌС‚РѕРіРѕ РјРµРЅСЋ, РїРѕРЅСЏС‚РЅРѕ, РґРѕР»Р¶РµРЅ СЃСѓС‰РµСЃС‚РІРѕРІР°С‚СЊ СЌР»РµРјРµРЅС‚ СЃ id=TabContainer
+	m = addSubMenu(mm, "Р’РёРґ","idvid");
+		addItem(m, "РЁСЂРёС„С‚ РєСЂСѓРїРЅРµРµ", "changeFont('chatdiv',1);");
+		addItem(m, "РЁСЂРёС„С‚ РјРµР»СЊС‡Рµ", "changeFont('chatdiv',-1);");
 		addItem(m, "--");
-		addItem(m, "Управление&nbsp;игнорами", "sm('!игноры');");
-		addItem(m, "Очистка чата", "document.all.chatdiv.innerHTML='';"); // завязка на chatdiv
+		addItem(m, "РЈРїСЂР°РІР»РµРЅРёРµ&nbsp;РёРіРЅРѕСЂР°РјРё", "sm('!РёРіРЅРѕСЂС‹');");
+		addItem(m, "РћС‡РёСЃС‚РєР° С‡Р°С‚Р°", "document.all.chatdiv.innerHTML='';"); // Р·Р°РІСЏР·РєР° РЅР° chatdiv
 };

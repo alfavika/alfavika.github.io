@@ -1,15 +1,15 @@
 <html>
 
 <head>
-  <meta charset="windows-1251">
-  <title> Альфа-хаб : викторина онлайн чат </title>
-  
-  <meta name="description" content="Альфа-хаб : викторина онлайн чат">
-  <meta name="keywords" content="викторина, онлайн, чат, игра, интеллектуальная, многопользовательская, интерактивная, играть бесплатно, quiz">
-  
+	<meta charset="utf-8">
+	<title>РђР»СЊС„Р°-С…Р°Р± : РІРёРєС‚РѕСЂРёРЅР° РѕРЅР»Р°Р№РЅ С‡Р°С‚</title>
+	
+	<meta name="description" content="РђР»СЊС„Р°-С…Р°Р± : РІРёРєС‚РѕСЂРёРЅР° РѕРЅР»Р°Р№РЅ С‡Р°С‚">
+	<meta name="keywords" content="РІРёРєС‚РѕСЂРёРЅР°, РѕРЅР»Р°Р№РЅ, С‡Р°С‚, РёРіСЂР°, РёРЅС‚РµР»Р»РµРєС‚СѓР°Р»СЊРЅР°СЏ, РјРЅРѕРіРѕРїРѕР»СЊР·РѕРІР°С‚РµР»СЊСЃРєР°СЏ, РёРЅС‚РµСЂР°РєС‚РёРІРЅР°СЏ, РёРіСЂР°С‚СЊ Р±РµСЃРїР»Р°С‚РЅРѕ, quiz">
+
 <script type="text/javascript" src="jquery-1.10.2.min.js"></script>
 <script type="text/javascript" src="chat15.js"></script>
-<script> apihost = "http://alfy.no-ip.org/"; </script>
+<script> apihost = "https://alfavika.ru/"; </script>
 <link rel="stylesheet" href="chat15.css" />
 <script type="text/javascript" src="userslist15.js"></script>
 <script type="text/javascript" src="menumaker15.js"></script>
@@ -18,15 +18,15 @@
 
 <body onload="onLoadProc();" class="bodyStyleD00" >
 
-<!-- Панелька авторизации -->
+<!-- РџР°РЅРµР»СЊРєР° Р°РІС‚РѕСЂРёР·Р°С†РёРё -->
 <div id="PanelAuth" style="position:fixed; right:20px; border-radius:8px;z-index:2000; background-color: #00AA00;"> 
-	<input type="text" autocomplete="off" name="nick" id="nick" value="" placeholder="Ник" > 
-	<input type="password" autocomplete="off" name="pass" id="pass" value="" placeholder="Пароль (для зарегистрированных)"> 
-	<input type="button" name="ButtonAuth" id="ButtonAuth" value="Войти"> 
-	<input type="button" name="ButtonQuit" id="ButtonQuit" value="Выйти" style="display:none;"> 
+	<input type="text" autocomplete="off" name="nick" id="nick" value="" placeholder="РќРёРє" > 
+	<input type="password" autocomplete="off" name="pass" id="pass" value="" placeholder="РџР°СЂРѕР»СЊ (РґР»СЏ Р·Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅРЅС‹С…)"> 
+	<input type="button" name="ButtonAuth" id="ButtonAuth" value="Р’РѕР№С‚Рё"> 
+	<input type="button" name="ButtonQuit" id="ButtonQuit" value="Р’С‹Р№С‚Рё" style="display:none;"> 
 </div>
 
-<!-- Верхняя панель управления с меню и другими инструментами -->
+<!-- Р’РµСЂС…РЅСЏСЏ РїР°РЅРµР»СЊ СѓРїСЂР°РІР»РµРЅРёСЏ СЃ РјРµРЅСЋ Рё РґСЂСѓРіРёРјРё РёРЅСЃС‚СЂСѓРјРµРЅС‚Р°РјРё -->
 <div id="rule" style="width:100%;height:4%; float:left; background-color: #BBFFBB;" > 
 	<div class="horizontalcssmenu" style="z-index:1000000; float:left; display:block;" >
 		<ul id="cssmenu1"> </ul>
@@ -34,64 +34,70 @@
 	</div>
 	&nbsp;
 	<select id="StSel" size="1" >
-		<option disabled>Выберите стиль</option>
-		<option selected value="Normal">Обычный</option>
-		<option value="Twix">Полосы</option>
-		<option value="DarkSusl">Тёмный</option>
-		<option value="DcStyle">DC-стиль</option>
+		<option disabled>Р’С‹Р±РµСЂРёС‚Рµ СЃС‚РёР»СЊ</option>
+		<option selected value="Normal">РћР±С‹С‡РЅС‹Р№</option>
+		<option value="Twix">РџРѕР»РѕСЃС‹</option>
+		<option value="DarkSusl">РўС‘РјРЅС‹Р№</option>
+		<option value="DcStyle">DC-СЃС‚РёР»СЊ</option>
 	</select>
-	<input type="CheckBox" id="ChBxScr" checked="checked" align="right" title="Автоматичесая прокрутка чата при появлении новых сообщений"> прокрутка </input>
-	<span id="authansw" style="font-style:italic;color:gray"> Альфа-хаб: чат - викторина онлайн </span>
+	<input type="CheckBox" id="ChBxScr" checked="checked" align="right" title="РђРІС‚РѕРјР°С‚РёС‡РµСЃР°СЏ РїСЂРѕРєСЂСѓС‚РєР° С‡Р°С‚Р° РїСЂРё РїРѕСЏРІР»РµРЅРёРё РЅРѕРІС‹С… СЃРѕРѕР±С‰РµРЅРёР№"> РїСЂРѕРєСЂСѓС‚РєР° </input>
+	<span id="authansw" style="font-style:italic;color:gray"> РђР»СЊС„Р°-С…Р°Р±: С‡Р°С‚ - РІРёРєС‚РѕСЂРёРЅР° РѕРЅР»Р°Р№РЅ </span>
 </div>
 
+<!-- РџР°РЅРµР»СЊ С‡Р°С‚Р° -->
 <div id="chatdiv" style="width:90%;height:86%; float:left; overflow-y:scroll; padding-bottom:8; font-size:12px; word-wrap: break-word;"> 
 	<div id="hellodiv" style="width:50%; margin-left:25%;" >
 		<center>
-		<br> Вы попали на веб-версию чат-викторины Альфа-хаба. 
-		<br> Чтобы войти, введите ник в верхнем правом углу страницы.
-		<br> Зарегистрированные пользователи должны также указать пароль.
+		<br> Р’С‹ РїРѕРїР°Р»Рё РЅР° РІРµР±-РІРµСЂСЃРёСЋ С‡Р°С‚-РІРёРєС‚РѕСЂРёРЅС‹ РђР»СЊС„Р°-С…Р°Р±Р°. 
+		<br> Р§С‚РѕР±С‹ РІРѕР№С‚Рё, РІРІРµРґРёС‚Рµ РЅРёРє РІ РІРµСЂС…РЅРµРј РїСЂР°РІРѕРј СѓРіР»Сѓ СЃС‚СЂР°РЅРёС†С‹.
+		<br> Р—Р°СЂРµРіРёСЃС‚СЂРёСЂРѕРІР°РЅРЅС‹Рµ РїРѕР»СЊР·РѕРІР°С‚РµР»Рё РґРѕР»Р¶РЅС‹ С‚Р°РєР¶Рµ СѓРєР°Р·Р°С‚СЊ РїР°СЂРѕР»СЊ.
 		<br>
-		<br> В случае проблем со входом на хаб, просьба сообщать о них на почту alfy@inbox.ru или в контакт - https://vk.com/dark_alf
-		<br> (но сначала попробуйте полностью обновить страницу браузера, обычно это Ctrl+F5)
+		<br> Р’ СЃР»СѓС‡Р°Рµ РїСЂРѕР±Р»РµРј СЃРѕ РІС…РѕРґРѕРј РЅР° С…Р°Р±, РїСЂРѕСЃСЊР±Р° СЃРѕРѕР±С‰Р°С‚СЊ Рѕ РЅРёС… РЅР° РїРѕС‡С‚Сѓ alfy@inbox.ru РёР»Рё РІ РєРѕРЅС‚Р°РєС‚ - https://vk.com/dark_alf
+		<br> (РЅРѕ СЃРЅР°С‡Р°Р»Р° РїРѕРїСЂРѕР±СѓР№С‚Рµ РїРѕР»РЅРѕСЃС‚СЊСЋ РѕР±РЅРѕРІРёС‚СЊ СЃС‚СЂР°РЅРёС†Сѓ Р±СЂР°СѓР·РµСЂР°, РѕР±С‹С‡РЅРѕ СЌС‚Рѕ Ctrl+F5)
 		</center>
 	</div>
 </div>
 
+<!-- РџР°РЅРµР»СЊРєР° С‚РµРјС‹  -->
 <div id="scena" class="dw" style=" background-color: #E0FFFF; width:auto; right:12%; top:6%; position:absolute; padding:8px; min-width:50%; max-width:80%; display:none; " >
-	<p id="themediv" style=" background-color:yellow; display:block;">Тема</p>
+	<p id="themediv" style=" background-color:yellow; display:block;">РўРµРјР°</p>
 	<div id="quesdiv" ></div>
 </div>
 
+<!-- РџР°РЅРµР»СЊ report-С„РѕСЂРјС‹ -->
 <div id="reportdiv" style="background-color: #BBFFBB; position:absolute; width:80%; right:15%; top:6%;  padding:8px; min-width:50%; max-width:80%; border: 1px solid #000000; display:none;" >
-	Форма отправки сообщения об ошибке или замечания к вопросу регулярной викторины: <br>
-	<input type="text" id="repques" value="" placeholder="Исходный текст вопроса" autocomplete="off" style="width:100%;"> <br>
-	<input type="text" id="repremark" value="" placeholder="Ваши замечания к вопросу" autocomplete="off" style="width:100%;"> <br>
+	Р¤РѕСЂРјР° РѕС‚РїСЂР°РІРєРё СЃРѕРѕР±С‰РµРЅРёСЏ РѕР± РѕС€РёР±РєРµ РёР»Рё Р·Р°РјРµС‡Р°РЅРёСЏ Рє РІРѕРїСЂРѕСЃСѓ СЂРµРіСѓР»СЏСЂРЅРѕР№ РІРёРєС‚РѕСЂРёРЅС‹: <br>
+	<input type="text" id="repques" value="" placeholder="РСЃС…РѕРґРЅС‹Р№ С‚РµРєСЃС‚ РІРѕРїСЂРѕСЃР°" autocomplete="off" style="width:100%;"> <br>
+	<input type="text" id="repremark" value="" placeholder="Р’Р°С€Рё Р·Р°РјРµС‡Р°РЅРёСЏ Рє РІРѕРїСЂРѕСЃСѓ" autocomplete="off" style="width:100%;"> <br>
 	<div align="right">
-		<input type="button" id="repsend" value="Отправить" style="width:8%;" onclick="sm('!trivreport '+document.getElementById('repques').value + 'ГГГ' + document.getElementById('repremark').value); document.getElementById('repques').value = document.getElementById('repremark').value = ''; document.getElementById('reportdiv').style.display='none';"> 
-		<input type="button" id="repclose" value="Отмена" style="width:8%;" onclick="document.getElementById('repques').value = document.getElementById('repremark').value = ''; document.getElementById('reportdiv').style.display='none'; ">
+		<input type="button" id="repsend" value="РћС‚РїСЂР°РІРёС‚СЊ" style="width:8%;" onclick="sm('!trivreport '+document.getElementById('repques').value + 'Р“Р“Р“' + document.getElementById('repremark').value); document.getElementById('repques').value = document.getElementById('repremark').value = ''; document.getElementById('reportdiv').style.display='none';"> 
+		<input type="button" id="repclose" value="РћС‚РјРµРЅР°" style="width:8%;" onclick="document.getElementById('repques').value = document.getElementById('repremark').value = ''; document.getElementById('reportdiv').style.display='none'; ">
 	</div>
 </div>
 
-<!-- здесь был простейший вариант отображения чата:
+<!-- Р·РґРµСЃСЊ Р±С‹Р» РїСЂРѕСЃС‚РµР№С€РёР№ РІР°СЂРёР°РЅС‚ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ С‡Р°С‚Р°:
 <TEXTAREA id="chatarea" ROWS=16  wrap="soft" spellcheck="false" style="width:100%;height:18%;font-family:Courier,monospace" readonly > </TEXTAREA> 
 -->
 
-<!-- радиопанель показывать по востребованию -->
+<!-- СЂР°РґРёРѕРїР°РЅРµР»СЊ РїРѕРєР°Р·С‹РІР°С‚СЊ РїРѕ РІРѕСЃС‚СЂРµР±РѕРІР°РЅРёСЋ -->
 <div id="radiodiv" style="width:'auto'; right:12%; top:4%; position:absolute; display:none; " >
 	<audio style="width:'auto'; display:block;" src="http://alfavika.ru:10002/alf.mp3" preload="none" controls></audio>
 </div>
 
+<!-- РџСЂР°РІР°СЏ РїР°РЅРµР»СЊ СЃРѕ СЃРїРёСЃРєРѕРј СЋР·РµСЂРѕРІ -->
 <div id="sidebar" style="width:10%;height:86%; float:left; overflow-y:scroll; padding-bottom:8; font-size:12px;">
 	<div id="usersdiv" style="font-size:12px;" > </div>
 </div>
 
+<!-- РџР°РЅРµР»СЊ РѕС‚РїСЂР°РІРєРё СЃРѕРѕР±С‰РµРЅРёСЏ -->
 <div id="sdiv" style="width:100%; height:4%; float:left;"> 
-	<input type="text" autocomplete="off" name="send" id="send" value="" placeholder="Сообщение для отправки" style="width:90%;">
-	<input type="button" name="ButtonSend" id="ButtonSend" disabled value="Отправить" style="width:8%;"> 
+	<input type="text" autocomplete="off" name="send" id="send" value="" placeholder="РЎРѕРѕР±С‰РµРЅРёРµ РґР»СЏ РѕС‚РїСЂР°РІРєРё" style="width:90%;">
+	<input type="button" name="ButtonSend" id="ButtonSend" disabled value="РћС‚РїСЂР°РІРёС‚СЊ" style="width:8%;"> 
 </div>
 
+<!-- РќРёР¶РЅСЏСЏ РїР°РЅРµР»СЊ -->
 <footer style="font-size:75%; text-align:center; display:block; width:99%; height:4%;" >
-	<a href="http://alfavika.ru" target="_blank" title="Основной сайт Альфа-хаба">Основной сайт Альфа-хаба</a>
+	<a href="http://alfavika.ru" target="_blank" title="РћСЃРЅРѕРІРЅРѕР№ СЃР°Р№С‚ РђР»СЊС„Р°-С…Р°Р±Р°">РћСЃРЅРѕРІРЅРѕР№ СЃР°Р№С‚ РђР»СЊС„Р°-С…Р°Р±Р°</a>
 </footer>
 
 </body>

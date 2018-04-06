@@ -1,16 +1,16 @@
 
-/* класс тела страницы чата */
+/* РєР»Р°СЃСЃ С‚РµР»Р° СЃС‚СЂР°РЅРёС†С‹ С‡Р°С‚Р° */
 .bodyStyleA00 { font-family:Arial,monospace; background-color: #FFFFFF; margin:0; }
 .bodyStyleA01 { font-family: Verdana, sans-serif; font-size: 14px; font-style: normal; background-color: #FFFFF0; margin:0; }
 .bodyStyleA02 { font-family: Verdana, sans-serif; font-size: 14px; font-style: normal; background: linear-gradient(#BBFFBB, white); margin:0; }
 .bodyStyleD00 { font-family: Verdana, sans-serif; font-size: 14px; font-style: normal; background: linear-gradient(#CCFFFF, white); margin:0; }
 
-/*  класс параграфов - всех отдельных строк чата */
+/*  РєР»Р°СЃСЃ РїР°СЂР°РіСЂР°С„РѕРІ - РІСЃРµС… РѕС‚РґРµР»СЊРЅС‹С… СЃС‚СЂРѕРє С‡Р°С‚Р° */
  p { 
 	margin:0px;
  }
 
-/* класс окошка вопроса */
+/* РєР»Р°СЃСЃ РѕРєРѕС€РєР° РІРѕРїСЂРѕСЃР° */
  .dw {
 	padding: 0px;
 	background-color:#FFFFD0;
@@ -21,12 +21,12 @@
  }
 
 
- /* базовые классы юзеров и ботов */
+ /* Р±Р°Р·РѕРІС‹Рµ РєР»Р°СЃСЃС‹ СЋР·РµСЂРѕРІ Рё Р±РѕС‚РѕРІ */
 .UserStyle {color:black; }
 .BotStyle {color:green;  }
 
 
-/* классы юзеров и ботов для разных стилей ы*/
+/* РєР»Р°СЃСЃС‹ СЋР·РµСЂРѕРІ Рё Р±РѕС‚РѕРІ РґР»СЏ СЂР°Р·РЅС‹С… СЃС‚РёР»РµР№ С‹*/
 
 /* normal */
 .MyNickStyle1 { color:red; }
@@ -39,11 +39,11 @@
 .MesStyle1 { color:black }
 .QuesStyle1 { color:#000080; }
 
-/* twix - колонки с контрастным цветом: */
+/* twix - РєРѕР»РѕРЅРєРё СЃ РєРѕРЅС‚СЂР°СЃС‚РЅС‹Рј С†РІРµС‚РѕРј: */
 .UserStyle2 { color:blue; cursor: pointer; }
 .QuesStyle2 { color: #8B3A3A; font-weight:600; padding-left: 20%; }
 
-/* DarkSusl - всякие извращения */
+/* DarkSusl - РІСЃСЏРєРёРµ РёР·РІСЂР°С‰РµРЅРёСЏ */
 .QuesStyle3 { color: black; text-shadow: 1px 2px yellow; padding-left: 10%; } 
 
 /* DC-style */
@@ -53,19 +53,19 @@
 .QuesStyle4 { color: #000080; padding-left: 10%; }
 
 
-/* класс скрываемых сообщений (для игноров) */
+/* РєР»Р°СЃСЃ СЃРєСЂС‹РІР°РµРјС‹С… СЃРѕРѕР±С‰РµРЅРёР№ (РґР»СЏ РёРіРЅРѕСЂРѕРІ) */
 .HiddenMes {
 	color:white;
 	background-color:#white;
 	font: 10px Tahoma;
 }
 
-.HiddenMes a { color:white; } /* стиль ссылок в скрываемых сообщениях тоже другой */
-.HiddenNick { color:pink; cursor: pointer; } /* и стиль ника... */
+.HiddenMes a { color:white; } /* СЃС‚РёР»СЊ СЃСЃС‹Р»РѕРє РІ СЃРєСЂС‹РІР°РµРјС‹С… СЃРѕРѕР±С‰РµРЅРёСЏС… С‚РѕР¶Рµ РґСЂСѓРіРѕР№ */
+.HiddenNick { color:pink; cursor: pointer; } /* Рё СЃС‚РёР»СЊ РЅРёРєР°... */
 .HiddenNick:hover {text-decoration: underline; color:navy; }
 
 
-/*  классы МЕНЮ. Взято с http://javascriptt.ru/menu20.html */
+/*  РєР»Р°СЃСЃС‹ РњР•РќР®. Р’Р·СЏС‚Рѕ СЃ http://javascriptt.ru/menu20.html */
 
 .horizontalcssmenu ul{
 margin: 0;

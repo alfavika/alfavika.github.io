@@ -2,24 +2,24 @@
 var apihost = ""; // "http://alfy.no-ip.org/";  // "http://alfavika.ru/"; // "http://localhost/";
 var picthost = "http://alfy.no-ip.org/";
 
-var memmes = ""; // запомненное сообщение для повтора при неудаче
-var authorized = false; // запросы к чату идут только при включенном флажке
-var authNick = ""; // ник, на котором была удачная авторизация
-var t = "t0"; // последнее известное состояние чата (нечисловое значение = неизвестное состояние)
+var memmes = ""; // Р·Р°РїРѕРјРЅРµРЅРЅРѕРµ СЃРѕРѕР±С‰РµРЅРёРµ РґР»СЏ РїРѕРІС‚РѕСЂР° РїСЂРё РЅРµСѓРґР°С‡Рµ
+var authorized = false; // Р·Р°РїСЂРѕСЃС‹ Рє С‡Р°С‚Сѓ РёРґСѓС‚ С‚РѕР»СЊРєРѕ РїСЂРё РІРєР»СЋС‡РµРЅРЅРѕРј С„Р»Р°Р¶РєРµ
+var authNick = ""; // РЅРёРє, РЅР° РєРѕС‚РѕСЂРѕРј Р±С‹Р»Р° СѓРґР°С‡РЅР°СЏ Р°РІС‚РѕСЂРёР·Р°С†РёСЏ
+var t = "t0"; // РїРѕСЃР»РµРґРЅРµРµ РёР·РІРµСЃС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ С‡Р°С‚Р° (РЅРµС‡РёСЃР»РѕРІРѕРµ Р·РЅР°С‡РµРЅРёРµ = РЅРµРёР·РІРµСЃС‚РЅРѕРµ СЃРѕСЃС‚РѕСЏРЅРёРµ)
 
-var aColor = "red"; // цвет ника авторизованного юзера в разных местах (может меняться в настройках)
+var aColor = "red"; // С†РІРµС‚ РЅРёРєР° Р°РІС‚РѕСЂРёР·РѕРІР°РЅРЅРѕРіРѕ СЋР·РµСЂР° РІ СЂР°Р·РЅС‹С… РјРµСЃС‚Р°С… (РјРѕР¶РµС‚ РјРµРЅСЏС‚СЊСЃСЏ РІ РЅР°СЃС‚СЂРѕР№РєР°С…)
 
 
-var localSett = { // локальные данные юзера для данного домена
+var localSett = { // Р»РѕРєР°Р»СЊРЅС‹Рµ РґР°РЅРЅС‹Рµ СЋР·РµСЂР° РґР»СЏ РґР°РЅРЅРѕРіРѕ РґРѕРјРµРЅР°
 	nick:"", 
 	styleName:"Normal",
-	unrevChar:"^" // значок, которым заменяется @
+	unrevChar:"^" // Р·РЅР°С‡РѕРє, РєРѕС‚РѕСЂС‹Рј Р·Р°РјРµРЅСЏРµС‚СЃСЏ @
 };  
 
 var StylesTable =
-{	// в каждом варианте оформления для каждой группы ников указываются:
-	// ns - NickStyle - стиль ника и его упоминаний
-	// ps - ParagraphStyle - стиль реплик идущих от данного ника
+{	// РІ РєР°Р¶РґРѕРј РІР°СЂРёР°РЅС‚Рµ РѕС„РѕСЂРјР»РµРЅРёСЏ РґР»СЏ РєР°Р¶РґРѕР№ РіСЂСѓРїРїС‹ РЅРёРєРѕРІ СѓРєР°Р·С‹РІР°СЋС‚СЃСЏ:
+	// ns - NickStyle - СЃС‚РёР»СЊ РЅРёРєР° Рё РµРіРѕ СѓРїРѕРјРёРЅР°РЅРёР№
+	// ps - ParagraphStyle - СЃС‚РёР»СЊ СЂРµРїР»РёРє РёРґСѓС‰РёС… РѕС‚ РґР°РЅРЅРѕРіРѕ РЅРёРєР°
 	Normal: {
 		groups: {
 			"QuesBot": { ns:"BotStyle1", ps:"QuesStyle1" },
@@ -61,42 +61,42 @@ var StylesTable =
 	}
 }
 
-var groups = StylesTable.Normal.groups;  // здесь хранится ссылка на настройки групп текущего выбранного стиля
+var groups = StylesTable.Normal.groups;  // Р·РґРµСЃСЊ С…СЂР°РЅРёС‚СЃСЏ СЃСЃС‹Р»РєР° РЅР° РЅР°СЃС‚СЂРѕР№РєРё РіСЂСѓРїРї С‚РµРєСѓС‰РµРіРѕ РІС‹Р±СЂР°РЅРЅРѕРіРѕ СЃС‚РёР»СЏ
 
-var nicks = { //определяет принадлежности ника к группе, имеющей свои настройки:
+var nicks = { //РѕРїСЂРµРґРµР»СЏРµС‚ РїСЂРёРЅР°РґР»РµР¶РЅРѕСЃС‚Рё РЅРёРєР° Рє РіСЂСѓРїРїРµ, РёРјРµСЋС‰РµР№ СЃРІРѕРё РЅР°СЃС‚СЂРѕР№РєРё:
 	"Vika":"QuesBot",
-	//"System":"QuesBot", // эксперимент 17.06.2017
+	//"System":"QuesBot", // СЌРєСЃРїРµСЂРёРјРµРЅС‚ 17.06.2017
 	"Drag":"QuesBot",
 	"drag":"QuesBot",
-	"Турнир":"QuesBot",
-	"Блиц":"QuesBot",
-	"Секундант": "QuesBot", //"InfoBot", пожалуй, он тоже относится к квестерам
-	"Информер":"InfoBot", // вообще он InfoBot, это так, для отладки
-	"Голосование":"InfoBot",
-	"Альфа-хаб":"InfoBot",
+	"РўСѓСЂРЅРёСЂ":"QuesBot",
+	"Р‘Р»РёС†":"QuesBot",
+	"РЎРµРєСѓРЅРґР°РЅС‚": "QuesBot", //"InfoBot", РїРѕР¶Р°Р»СѓР№, РѕРЅ С‚РѕР¶Рµ РѕС‚РЅРѕСЃРёС‚СЃСЏ Рє РєРІРµСЃС‚РµСЂР°Рј
+	"РРЅС„РѕСЂРјРµСЂ":"InfoBot", // РІРѕРѕР±С‰Рµ РѕРЅ InfoBot, СЌС‚Рѕ С‚Р°Рє, РґР»СЏ РѕС‚Р»Р°РґРєРё
+	"Р“РѕР»РѕСЃРѕРІР°РЅРёРµ":"InfoBot",
+	"РђР»СЊС„Р°-С…Р°Р±":"InfoBot",
 	"UserStyle":"MyNick",
 	"MyStyle":"User"
-} // сюда ещё можно подгрузить из localStorage списки друзей, игноров и т.п.
-// возможно нужно делать таблицу где никам соответствуют сразу структуры групп и перевычислять её при изменении стиля
+} // СЃСЋРґР° РµС‰С‘ РјРѕР¶РЅРѕ РїРѕРґРіСЂСѓР·РёС‚СЊ РёР· localStorage СЃРїРёСЃРєРё РґСЂСѓР·РµР№, РёРіРЅРѕСЂРѕРІ Рё С‚.Рї.
+// РІРѕР·РјРѕР¶РЅРѕ РЅСѓР¶РЅРѕ РґРµР»Р°С‚СЊ С‚Р°Р±Р»РёС†Сѓ РіРґРµ РЅРёРєР°Рј СЃРѕРѕС‚РІРµС‚СЃС‚РІСѓСЋС‚ СЃСЂР°Р·Сѓ СЃС‚СЂСѓРєС‚СѓСЂС‹ РіСЂСѓРїРї Рё РїРµСЂРµРІС‹С‡РёСЃР»СЏС‚СЊ РµС‘ РїСЂРё РёР·РјРµРЅРµРЅРёРё СЃС‚РёР»СЏ
 
 
-function gOfNick(n) // определение имени группы к которой относится данный ник
+function gOfNick(n) // РѕРїСЂРµРґРµР»РµРЅРёРµ РёРјРµРЅРё РіСЂСѓРїРїС‹ Рє РєРѕС‚РѕСЂРѕР№ РѕС‚РЅРѕСЃРёС‚СЃСЏ РґР°РЅРЅС‹Р№ РЅРёРє
 {	var g; // = "User";
 	if(n==authNick) g = "MyNick"; else 
-	if(n in nicks) g = nicks[n];else //if(nick in nicks) g = nicks[nick];else // ошибка была
-		g = "User"; //по умолчанию все остальные - просто юзеры
+	if(n in nicks) g = nicks[n];else //if(nick in nicks) g = nicks[nick];else // РѕС€РёР±РєР° Р±С‹Р»Р°
+		g = "User"; //РїРѕ СѓРјРѕР»С‡Р°РЅРёСЋ РІСЃРµ РѕСЃС‚Р°Р»СЊРЅС‹Рµ - РїСЂРѕСЃС‚Рѕ СЋР·РµСЂС‹
 	return g;
 }
 
 function htmlForNick(n)
-{	// пример использования gOfNick
+{	// РїСЂРёРјРµСЂ РёСЃРїРѕР»СЊР·РѕРІР°РЅРёСЏ gOfNick
 	var sl = groups[gOfNick(n)];
 	return "<b class="+ sl.ns +" onclick='onNC(this);' >" + n + "</b>";
 }
 
 function ChatAppendOld(news)
 {	document.all.chatarea.value += news;
-	if(document.all.ChBxScr.checked) // todo - вынести в настройки
+	if(document.all.ChBxScr.checked) // todo - РІС‹РЅРµСЃС‚Рё РІ РЅР°СЃС‚СЂРѕР№РєРё
 	document.all.chatarea.scrollTop += 1000000; 
 };
 
@@ -114,9 +114,9 @@ function changeFont(element,step)
 }
 
 function testScrool()
-{	if(document.all.ChBxScr.checked) // todo - вынести в настройки
+{	if(document.all.ChBxScr.checked) // todo - РІС‹РЅРµСЃС‚Рё РІ РЅР°СЃС‚СЂРѕР№РєРё
 		document.all.chatdiv.scrollTop = document.all.chatdiv.scrollHeight;
-		//document.all.chatdiv.scrollTop += 1000000; // не делайте так
+		//document.all.chatdiv.scrollTop += 1000000; // РЅРµ РґРµР»Р°Р№С‚Рµ С‚Р°Рє
 }
 
 function testNoScrool()
@@ -125,21 +125,21 @@ function testNoScrool()
 	if(cd.scrollTop < (cd.scrollHeight - cd.clientHeight))
 	{ 	document.all.ChBxScr.checked = false;
 		var bs = document.getElementById("ButtonScrool");
-		bs.value = "Включить прокрутку";
+		bs.value = "Р’РєР»СЋС‡РёС‚СЊ РїСЂРѕРєСЂСѓС‚РєСѓ";
 		bs.style.display = "block";
 	}
 	else
 	{ 	document.all.ChBxScr.checked = true;
 		var bs = document.getElementById("ButtonScrool");
-		bs.value = "Прокрутка включена";
+		bs.value = "РџСЂРѕРєСЂСѓС‚РєР° РІРєР»СЋС‡РµРЅР°";
 		bs.style.display = "none";
 	}
 }
 
 var qstate =
 {
-	theme:"Тема", //актуальная тема
-	qdiv:0 //ссылка на div последнего вопроса
+	theme:"РўРµРјР°", //Р°РєС‚СѓР°Р»СЊРЅР°СЏ С‚РµРјР°
+	qdiv:0 //СЃСЃС‹Р»РєР° РЅР° div РїРѕСЃР»РµРґРЅРµРіРѕ РІРѕРїСЂРѕСЃР°
 }
 
 var ols =
@@ -149,21 +149,21 @@ var ols =
 	dt: 0
 }
 
-var last_sg = "User"; // предыдущий отправитель
+var last_sg = "User"; // РїСЂРµРґС‹РґСѓС‰РёР№ РѕС‚РїСЂР°РІРёС‚РµР»СЊ
 
 var r_s=/\:(yahoo|am|s5|sceptic|secret|blush|cry|good|lol|O_o|04|05|14|smile|sad|give-rose|wacko|gibe|ad|ae|O|music|fig|07|blink|hahaha|lol2|thanks|laughting|o2|wall|flowers|rose|Df|heart|aggressive|cem|rolleyes)\:/gi;
 
-// ищует в строке коды смайлов из регулярного выражения r_s и заменяет их на img-гифки:
+// РёС‰СѓРµС‚ РІ СЃС‚СЂРѕРєРµ РєРѕРґС‹ СЃРјР°Р№Р»РѕРІ РёР· СЂРµРіСѓР»СЏСЂРЅРѕРіРѕ РІС‹СЂР°Р¶РµРЅРёСЏ r_s Рё Р·Р°РјРµРЅСЏРµС‚ РёС… РЅР° img-РіРёС„РєРё:
 function makeSmiles(str)
 {
-	//смайлы-исключения, не представимые в виде :код: нужно привести к такому виду:
+	//СЃРјР°Р№Р»С‹-РёСЃРєР»СЋС‡РµРЅРёСЏ, РЅРµ РїСЂРµРґСЃС‚Р°РІРёРјС‹Рµ РІ РІРёРґРµ :РєРѕРґ: РЅСѓР¶РЅРѕ РїСЂРёРІРµСЃС‚Рё Рє С‚Р°РєРѕРјСѓ РІРёРґСѓ:
 	str = str.replace(/\:\-?\)/g, ":smile:");
 	str = str.replace(/\:\-?\(/g, ":sad:");
 	
-	// регулярное выражение ищет комбинации типа ":код:" и заменяет их гифками:
+	// СЂРµРіСѓР»СЏСЂРЅРѕРµ РІС‹СЂР°Р¶РµРЅРёРµ РёС‰РµС‚ РєРѕРјР±РёРЅР°С†РёРё С‚РёРїР° ":РєРѕРґ:" Рё Р·Р°РјРµРЅСЏРµС‚ РёС… РіРёС„РєР°РјРё:
 	str=str.replace(r_s, function(dummy, match) {
 		return '<img src="../img/smiles/' + match+'.gif">';
-		//testScrool(); // если все смайлы один раз прогрузить заранее, прокрутка не нужна
+		//testScrool(); // РµСЃР»Рё РІСЃРµ СЃРјР°Р№Р»С‹ РѕРґРёРЅ СЂР°Р· РїСЂРѕРіСЂСѓР·РёС‚СЊ Р·Р°СЂР°РЅРµРµ, РїСЂРѕРєСЂСѓС‚РєР° РЅРµ РЅСѓР¶РЅР°
 	});
 	return str;
 }
@@ -172,20 +172,20 @@ function ChatAppend(news)
 {
 	if(news=="") return; //!
 	
-	// testNoScrool(); //глючит :-(
+	// testNoScrool(); //РіР»СЋС‡РёС‚ :-(
 	
 	var arr = news.split("\n");
-	var uch = localSett.unrevChar || "^"; // на замену можно хоть уникод-символ, хоть картинку
-	var clp = groups["User"].ps; //  ""; // класс параграфа сохраняется для последовательно идущих строк
-	var sg = last_sg; //"User"; // к какой группе относится отправитель (SenderGroup)
+	var uch = localSett.unrevChar || "^"; // РЅР° Р·Р°РјРµРЅСѓ РјРѕР¶РЅРѕ С…РѕС‚СЊ СѓРЅРёРєРѕРґ-СЃРёРјРІРѕР», С…РѕС‚СЊ РєР°СЂС‚РёРЅРєСѓ
+	var clp = groups["User"].ps; //  ""; // РєР»Р°СЃСЃ РїР°СЂР°РіСЂР°С„Р° СЃРѕС…СЂР°РЅСЏРµС‚СЃСЏ РґР»СЏ РїРѕСЃР»РµРґРѕРІР°С‚РµР»СЊРЅРѕ РёРґСѓС‰РёС… СЃС‚СЂРѕРє
+	var sg = last_sg; //"User"; // Рє РєР°РєРѕР№ РіСЂСѓРїРїРµ РѕС‚РЅРѕСЃРёС‚СЃСЏ РѕС‚РїСЂР°РІРёС‚РµР»СЊ (SenderGroup)
 	var notif = "";
 	var l = arr.length;
 	for (var i = 0; i < l; i++)
 	{	var str= arr[i];
-		if ((str=="")) continue; // костыль, пока сервер присылает лишний \r\n в конце ответа
-		var prestr =""; // здесь обычно оказывается время
+		if ((str=="")) continue; // РєРѕСЃС‚С‹Р»СЊ, РїРѕРєР° СЃРµСЂРІРµСЂ РїСЂРёСЃС‹Р»Р°РµС‚ Р»РёС€РЅРёР№ \r\n РІ РєРѕРЅС†Рµ РѕС‚РІРµС‚Р°
+		var prestr =""; // Р·РґРµСЃСЊ РѕР±С‹С‡РЅРѕ РѕРєР°Р·С‹РІР°РµС‚СЃСЏ РІСЂРµРјСЏ
 		var j = str.indexOf("<");
-		if(j!=-1) // блок анализа ника
+		if(j!=-1) // Р±Р»РѕРє Р°РЅР°Р»РёР·Р° РЅРёРєР°
 		{ var j1 = str.indexOf(">", j+1);
 		  if(j1!=-1)
 		  { var nick = str.substring(j+1, j1);
@@ -200,7 +200,7 @@ function ChatAppend(news)
 			
 			//prestr = str.substring(0,j) + "&lt;<b class="+ cln +">" + nick + "</b>&gt;";
 			prestr = str.substring(0,j) + "&lt;<b class="+ cln +" onclick='onNC(this);' >" + nick + "</b>&gt;";
-			//подстрока перед ником обычно означает время, её можно сделать более бледным цветом
+			//РїРѕРґСЃС‚СЂРѕРєР° РїРµСЂРµРґ РЅРёРєРѕРј РѕР±С‹С‡РЅРѕ РѕР·РЅР°С‡Р°РµС‚ РІСЂРµРјСЏ, РµС‘ РјРѕР¶РЅРѕ СЃРґРµР»Р°С‚СЊ Р±РѕР»РµРµ Р±Р»РµРґРЅС‹Рј С†РІРµС‚РѕРј
 			
 			str = str.substring(j1+1);
 		  };
@@ -211,14 +211,14 @@ function ChatAppend(news)
 		//str = str.replace(new RegExp("\t",'g'), '<img src="tab2.gif" height="15" width="60" alt="" />');
 		//str = str.replace(new RegExp("\t",'g'), '<span style="padding-left:60;"></span>');
 		str = str.replace(new RegExp("\t",'g'), '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;');
-		// str = str.replace('\n', "<br>"); // после split такого не должно же остаться
+		// str = str.replace('\n', "<br>"); // РїРѕСЃР»Рµ split С‚Р°РєРѕРіРѕ РЅРµ РґРѕР»Р¶РЅРѕ Р¶Рµ РѕСЃС‚Р°С‚СЊСЃСЏ
 		if(uch!="@") str = str.replace(new RegExp("@",'g'), uch); 
 		
-		//str = str.replace(authNick, "<b style='color:" + aColor + "'> "+authNick +" </b>"); // перенесено ниже, это нужно не всегда
+		//str = str.replace(authNick, "<b style='color:" + aColor + "'> "+authNick +" </b>"); // РїРµСЂРµРЅРµСЃРµРЅРѕ РЅРёР¶Рµ, СЌС‚Рѕ РЅСѓР¶РЅРѕ РЅРµ РІСЃРµРіРґР°
 		
-		var allowImg = (sg!="Hidden"); // показывать ли изображения от данного ника (здесь может быть и более сложное условие)
+		var allowImg = (sg!="Hidden"); // РїРѕРєР°Р·С‹РІР°С‚СЊ Р»Рё РёР·РѕР±СЂР°Р¶РµРЅРёСЏ РѕС‚ РґР°РЅРЅРѕРіРѕ РЅРёРєР° (Р·РґРµСЃСЊ РјРѕР¶РµС‚ Р±С‹С‚СЊ Рё Р±РѕР»РµРµ СЃР»РѕР¶РЅРѕРµ СѓСЃР»РѕРІРёРµ)
 		
-		// делаем кликабельными ссылки
+		// РґРµР»Р°РµРј РєР»РёРєР°Р±РµР»СЊРЅС‹РјРё СЃСЃС‹Р»РєРё
 		var haveurl = "";
 		str=str.replace(/((https?\:\/\/|ftp\:\/\/)|(www\.))(\S+)(\w{2,4})(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?/gi, function(url) {
 		    nice = url;
@@ -228,12 +228,12 @@ function ChatAppend(news)
 		      url = 'http://' + url;
 			// haveurl = url;
 			
-			// кстати, возможно давать картинки следует разрешить только викторине и, может быть, админам
+			// РєСЃС‚Р°С‚Рё, РІРѕР·РјРѕР¶РЅРѕ РґР°РІР°С‚СЊ РєР°СЂС‚РёРЅРєРё СЃР»РµРґСѓРµС‚ СЂР°Р·СЂРµС€РёС‚СЊ С‚РѕР»СЊРєРѕ РІРёРєС‚РѕСЂРёРЅРµ Рё, РјРѕР¶РµС‚ Р±С‹С‚СЊ, Р°РґРјРёРЅР°Рј
 			var r=/.(jpg|jpeg|gif|png|bmp)$/i;
 			if(allowImg && (r.test(url))) //if (r.test(url))
 			{
 				var style = 'min-width: 16px; min-height: 16px; background: url(/img/loading-16x16.gif) transparent no-repeat;';
-				style+= ' display:block; margin:0 auto; '; // выделим картинку в отдельную строку и центрируем (это же нужно?)
+				style+= ' display:block; margin:0 auto; '; // РІС‹РґРµР»РёРј РєР°СЂС‚РёРЅРєСѓ РІ РѕС‚РґРµР»СЊРЅСѓСЋ СЃС‚СЂРѕРєСѓ Рё С†РµРЅС‚СЂРёСЂСѓРµРј (СЌС‚Рѕ Р¶Рµ РЅСѓР¶РЅРѕ?)
 				if ( url.indexOf(picthost + "img") == -1 )
 				style += ' max-width: 480px; max-height: 200px;';  //style += ' max-width: 300px; max-height: 400px;';
 				//return '<noindex><img src="'+ url +'" style="' + style + '" onload="testScrool();" align="top" /> </noindex>';
@@ -245,36 +245,36 @@ function ChatAppend(news)
 			else 
 			return '<noindex><a target="_blank" rel="nofollow" href="'+ url +'">'+ url +'</a></noindex>'; 	
 		  });
-		// закончили делать кликабельными ссылки
+		// Р·Р°РєРѕРЅС‡РёР»Рё РґРµР»Р°С‚СЊ РєР»РёРєР°Р±РµР»СЊРЅС‹РјРё СЃСЃС‹Р»РєРё
 		
-		if(allowImg) // смайлики заигноренных видеть не нужно (надо подумать, возможно они не нужны и от квест-ботов)
-		str = makeSmiles(str); // если нужно - покажем смайлики (увы, в этой версии - без панели для их отправки)
+		if(allowImg) // СЃРјР°Р№Р»РёРєРё Р·Р°РёРіРЅРѕСЂРµРЅРЅС‹С… РІРёРґРµС‚СЊ РЅРµ РЅСѓР¶РЅРѕ (РЅР°РґРѕ РїРѕРґСѓРјР°С‚СЊ, РІРѕР·РјРѕР¶РЅРѕ РѕРЅРё РЅРµ РЅСѓР¶РЅС‹ Рё РѕС‚ РєРІРµСЃС‚-Р±РѕС‚РѕРІ)
+		str = makeSmiles(str); // РµСЃР»Рё РЅСѓР¶РЅРѕ - РїРѕРєР°Р¶РµРј СЃРјР°Р№Р»РёРєРё (СѓРІС‹, РІ СЌС‚РѕР№ РІРµСЂСЃРёРё - Р±РµР· РїР°РЅРµР»Рё РґР»СЏ РёС… РѕС‚РїСЂР°РІРєРё)
 		  
 		if(sg=="QuesBot")
 		{
 			// qstate.qdiv; qstate.theme
-			var isT = (str.indexOf("Тема:")!=-1) //&& (prestr.indexOf("Турнир")!=-1) // темы только в турнирах бы...
+			var isT = (str.indexOf("РўРµРјР°:")!=-1) //&& (prestr.indexOf("РўСѓСЂРЅРёСЂ")!=-1) // С‚РµРјС‹ С‚РѕР»СЊРєРѕ РІ С‚СѓСЂРЅРёСЂР°С… Р±С‹...
 			if(isT) 
-			{	qstate.theme = str.substr(str.indexOf("Тема"));
+			{	qstate.theme = str.substr(str.indexOf("РўРµРјР°"));
 				document.all.themediv.innerHTML = str;
 				document.all.scena.style.display = "block";
 			};
 			
-			var isTop = (str.indexOf("топ:")!=-1);
+			var isTop = (str.indexOf("С‚РѕРї:")!=-1);
 			if(isTop)
 			{	qstate.theme = "";
 				document.all.themediv.innerHTML = "";
 				document.all.scena.style.display = "none";
 			};
 			
-			var isQ = (str.indexOf("Вопрос")!=-1) || isT || isTop; 
-			isQ = isQ || (str.indexOf("слово №")!=-1); // для драга
-			isQ = isQ || (str.indexOf("Анаграмма")!=-1); // для анаграмм
+			var isQ = (str.indexOf("Р’РѕРїСЂРѕСЃ")!=-1) || isT || isTop; 
+			isQ = isQ || (str.indexOf("СЃР»РѕРІРѕ в„–")!=-1); // РґР»СЏ РґСЂР°РіР°
+			isQ = isQ || (str.indexOf("РђРЅР°РіСЂР°РјРјР°")!=-1); // РґР»СЏ Р°РЅР°РіСЂР°РјРј
 						
-			// начало блока нового опроса можно чуть выделять верхним топом (можно даже с темой, если есть)
+			// РЅР°С‡Р°Р»Рѕ Р±Р»РѕРєР° РЅРѕРІРѕРіРѕ РѕРїСЂРѕСЃР° РјРѕР¶РЅРѕ С‡СѓС‚СЊ РІС‹РґРµР»СЏС‚СЊ РІРµСЂС…РЅРёРј С‚РѕРїРѕРј (РјРѕР¶РЅРѕ РґР°Р¶Рµ СЃ С‚РµРјРѕР№, РµСЃР»Рё РµСЃС‚СЊ)
 			if(isQ) str = "<b style='margin-top:8px;' >" + str + "</b>";
 			
-			if((last_sg != sg)||isQ) // (str.indexOf("Вопрос")!=-1))
+			if((last_sg != sg)||isQ) // (str.indexOf("Р’РѕРїСЂРѕСЃ")!=-1))
 			{
 				//*var elm = document.createElement('div');
 				//elm.style.width = "50%";
@@ -282,9 +282,9 @@ function ChatAppend(news)
 				qstate.qdiv = document.createElement('div');
 				qstate.qdiv.className = "dw";
 				//qstate.qdiv.style = "width: 50%; margin: 0 auto; ";
-				//qstate.qdiv.style = "display:table; margin: 0 auto; "; //центрирует div
-				//qstate.qdiv.style = "width:75%; margin-left:20%"; // не работает в хроме
-				qstate.qdiv.style.marginLeft = '20%'; // правильно так, а лучше - в dw
+				//qstate.qdiv.style = "display:table; margin: 0 auto; "; //С†РµРЅС‚СЂРёСЂСѓРµС‚ div
+				//qstate.qdiv.style = "width:75%; margin-left:20%"; // РЅРµ СЂР°Р±РѕС‚Р°РµС‚ РІ С…СЂРѕРјРµ
+				qstate.qdiv.style.marginLeft = '20%'; // РїСЂР°РІРёР»СЊРЅРѕ С‚Р°Рє, Р° Р»СѓС‡С€Рµ - РІ dw
 				
 				if(isQ) qstate.qdiv.style.paddingTop = '16px';
 				
@@ -297,64 +297,64 @@ function ChatAppend(news)
 				//*document.all.chatdiv.appendChild(elm);
 			};
 			
-			// первое слово десь всегда ник, потому в принципе можно выяснить и его класс:
-			var z = str.indexOf(" ответ за"); // тут же и "первый ответ за"
-			if(z==-1) z = str.indexOf(" подряд за");
+			// РїРµСЂРІРѕРµ СЃР»РѕРІРѕ РґРµСЃСЊ РІСЃРµРіРґР° РЅРёРє, РїРѕС‚РѕРјСѓ РІ РїСЂРёРЅС†РёРїРµ РјРѕР¶РЅРѕ РІС‹СЏСЃРЅРёС‚СЊ Рё РµРіРѕ РєР»Р°СЃСЃ:
+			var z = str.indexOf(" РѕС‚РІРµС‚ Р·Р°"); // С‚СѓС‚ Р¶Рµ Рё "РїРµСЂРІС‹Р№ РѕС‚РІРµС‚ Р·Р°"
+			if(z==-1) z = str.indexOf(" РїРѕРґСЂСЏРґ Р·Р°");
 			if(z!=-1)
-			{	var nl = str.indexOf(" ", 1); // ник это всегда одно целое слово начиная со 2-го символа
+			{	var nl = str.indexOf(" ", 1); // РЅРёРє СЌС‚Рѕ РІСЃРµРіРґР° РѕРґРЅРѕ С†РµР»РѕРµ СЃР»РѕРІРѕ РЅР°С‡РёРЅР°СЏ СЃРѕ 2-РіРѕ СЃРёРјРІРѕР»Р°
 				var anick = str.substr(1, nl-1);
 				str = " <i>" + htmlForNick(anick) + "</i>" + str.substr(nl); 
 			};
 			
-			if(str.indexOf("Рейтинг:")!=-1) // только для турниров
+			if(str.indexOf("Р РµР№С‚РёРЅРі:")!=-1) // С‚РѕР»СЊРєРѕ РґР»СЏ С‚СѓСЂРЅРёСЂРѕРІ
 			str = "<span style='background-color:#E0FFFF;' >" + str + "</span>";
 			
-			var pr = str.indexOf("Правильный ответ:");
+			var pr = str.indexOf("РџСЂР°РІРёР»СЊРЅС‹Р№ РѕС‚РІРµС‚:");
 			if(pr!=-1)
 				//str = str.substr(0,pr+18) + "<span style='background-color:#E0FFFF;' >" + str.substr(pr+18) + "</span>";
 				str = str.substr(0,pr+18) + "<b>" + str.substr(pr+18) + "</b>";
 			
-			str = str.replace(" "+authNick, "<b style='color:" + aColor + "'> "+authNick +"</b>"); // todo - звук опционально
-			// кстати, не факт что ник нужно подсвечивать в репликах викторины; человек и так знает, что туда писал 
-			// хотя с другой стороны, это ведь признак правильного ответа и по звуку можно понять, что варианты перебирать уже не надо
+			str = str.replace(" "+authNick, "<b style='color:" + aColor + "'> "+authNick +"</b>"); // todo - Р·РІСѓРє РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ
+			// РєСЃС‚Р°С‚Рё, РЅРµ С„Р°РєС‚ С‡С‚Рѕ РЅРёРє РЅСѓР¶РЅРѕ РїРѕРґСЃРІРµС‡РёРІР°С‚СЊ РІ СЂРµРїР»РёРєР°С… РІРёРєС‚РѕСЂРёРЅС‹; С‡РµР»РѕРІРµРє Рё С‚Р°Рє Р·РЅР°РµС‚, С‡С‚Рѕ С‚СѓРґР° РїРёСЃР°Р» 
+			// С…РѕС‚СЏ СЃ РґСЂСѓРіРѕР№ СЃС‚РѕСЂРѕРЅС‹, СЌС‚Рѕ РІРµРґСЊ РїСЂРёР·РЅР°Рє РїСЂР°РІРёР»СЊРЅРѕРіРѕ РѕС‚РІРµС‚Р° Рё РїРѕ Р·РІСѓРєСѓ РјРѕР¶РЅРѕ РїРѕРЅСЏС‚СЊ, С‡С‚Рѕ РІР°СЂРёР°РЅС‚С‹ РїРµСЂРµР±РёСЂР°С‚СЊ СѓР¶Рµ РЅРµ РЅР°РґРѕ
 			
 			var elm = document.createElement('div');
-			if (clp!="") elm.innerHTML = prestr + str; // здесь, наверное, не нужны настройки стиля
+			if (clp!="") elm.innerHTML = prestr + str; // Р·РґРµСЃСЊ, РЅР°РІРµСЂРЅРѕРµ, РЅРµ РЅСѓР¶РЅС‹ РЅР°СЃС‚СЂРѕР№РєРё СЃС‚РёР»СЏ
 					else elm.innerHTML = prestr + str;
-			if((str!="")&&(str!=" ")&&(str!="  "))  // пустые строки от квестера пропускаем
+			if((str!="")&&(str!=" ")&&(str!="  "))  // РїСѓСЃС‚С‹Рµ СЃС‚СЂРѕРєРё РѕС‚ РєРІРµСЃС‚РµСЂР° РїСЂРѕРїСѓСЃРєР°РµРј
 				if(qstate.qdiv!=0) qstate.qdiv.appendChild(elm);
 		}
 		else
 		{
-			//предобработка для обычных строк:
-			str = str.replace(" "+authNick, "<b style='color:" + aColor + "'> "+authNick +"</b>"); // todo - звук опционально
-			// внимание, искать обязательно с пробелом!
+			//РїСЂРµРґРѕР±СЂР°Р±РѕС‚РєР° РґР»СЏ РѕР±С‹С‡РЅС‹С… СЃС‚СЂРѕРє:
+			str = str.replace(" "+authNick, "<b style='color:" + aColor + "'> "+authNick +"</b>"); // todo - Р·РІСѓРє РѕРїС†РёРѕРЅР°Р»СЊРЅРѕ
+			// РІРЅРёРјР°РЅРёРµ, РёСЃРєР°С‚СЊ РѕР±СЏР·Р°С‚РµР»СЊРЅРѕ СЃ РїСЂРѕР±РµР»РѕРј!
 			
 			var elm = document.createElement('div');
 			if (clp!="") elm.innerHTML =  prestr + " <span class="+ clp + ">" + str + "</span>";
 					else elm.innerHTML = prestr + str;
 			
-			if(sg=="Hidden") // если ник относится к группе скрываемых (игнорируемых)
-			{	elm.classList.add("hiddenMes"); // установим для div-а с этим сообщением свой стиль (цвет шрифта=цвет фона и меньший шрифт)
+			if(sg=="Hidden") // РµСЃР»Рё РЅРёРє РѕС‚РЅРѕСЃРёС‚СЃСЏ Рє РіСЂСѓРїРїРµ СЃРєСЂС‹РІР°РµРјС‹С… (РёРіРЅРѕСЂРёСЂСѓРµРјС‹С…)
+			{	elm.classList.add("hiddenMes"); // СѓСЃС‚Р°РЅРѕРІРёРј РґР»СЏ div-Р° СЃ СЌС‚РёРј СЃРѕРѕР±С‰РµРЅРёРµРј СЃРІРѕР№ СЃС‚РёР»СЊ (С†РІРµС‚ С€СЂРёС„С‚Р°=С†РІРµС‚ С„РѕРЅР° Рё РјРµРЅСЊС€РёР№ С€СЂРёС„С‚)
 				elm.innerHTML = prestr + str;
 			}
 			
 			document.all.chatdiv.appendChild(elm);
-			// см. также removeChild, cont.insertBefore(div2, table.nextSibling);
+			// СЃРј. С‚Р°РєР¶Рµ removeChild, cont.insertBefore(div2, table.nextSibling);
 		};
 		
-		last_sg = sg; //запоминаем имя последнего отображённой группы
+		last_sg = sg; //Р·Р°РїРѕРјРёРЅР°РµРј РёРјСЏ РїРѕСЃР»РµРґРЅРµРіРѕ РѕС‚РѕР±СЂР°Р¶С‘РЅРЅРѕР№ РіСЂСѓРїРїС‹
 		
-		if(sg=="QuesBot") notif+=arr[i]+"\n"; // запоминаем все сообщения квестера для нотификации
+		if(sg=="QuesBot") notif+=arr[i]+"\n"; // Р·Р°РїРѕРјРёРЅР°РµРј РІСЃРµ СЃРѕРѕР±С‰РµРЅРёСЏ РєРІРµСЃС‚РµСЂР° РґР»СЏ РЅРѕС‚РёС„РёРєР°С†РёРё
 	};
 	
 	testScrool();
 
-	if(false) // если набралось несколько уведомлений за раз, показывать нужно ВСЕ. одной нотификацией.
+	if(false) // РµСЃР»Рё РЅР°Р±СЂР°Р»РѕСЃСЊ РЅРµСЃРєРѕР»СЊРєРѕ СѓРІРµРґРѕРјР»РµРЅРёР№ Р·Р° СЂР°Р·, РїРѕРєР°Р·С‹РІР°С‚СЊ РЅСѓР¶РЅРѕ Р’РЎР•. РѕРґРЅРѕР№ РЅРѕС‚РёС„РёРєР°С†РёРµР№.
 	if(notif!="")
 	{
-		var mailNotification = new Notification("Альфа-хаб", {
-			tag : "получено",  //тэг нужен для групиировки сообщений
+		var mailNotification = new Notification("РђР»СЊС„Р°-С…Р°Р±", {
+			tag : "РїРѕР»СѓС‡РµРЅРѕ",  //С‚СЌРі РЅСѓР¶РµРЅ РґР»СЏ РіСЂСѓРїРёРёСЂРѕРІРєРё СЃРѕРѕР±С‰РµРЅРёР№
 			body : notif, 
 			icon : "../learn/SmileCat.gif"
 		})
@@ -388,23 +388,23 @@ function UpdateChat() {
 			var vt = data.substring(0,i);
 			var vdata = data.substring(i+1);
 
-			if(vt=="no") //setTimeout(UpdateChat, 20000); // хотя по-хорошему нужно молчать до явного запроса авторизации
+			if(vt=="no") //setTimeout(UpdateChat, 20000); // С…РѕС‚СЏ РїРѕ-С…РѕСЂРѕС€РµРјСѓ РЅСѓР¶РЅРѕ РјРѕР»С‡Р°С‚СЊ РґРѕ СЏРІРЅРѕРіРѕ Р·Р°РїСЂРѕСЃР° Р°РІС‚РѕСЂРёР·Р°С†РёРё
 			{	authorized = false;
 				onAuthChange();
 				document.getElementById('authansw').innerHTML = data;
-				ChatAppend(vdata); // а нужно ли показывать причину отказа прямо в чате, а не только в authansw ?
+				ChatAppend(vdata); // Р° РЅСѓР¶РЅРѕ Р»Рё РїРѕРєР°Р·С‹РІР°С‚СЊ РїСЂРёС‡РёРЅСѓ РѕС‚РєР°Р·Р° РїСЂСЏРјРѕ РІ С‡Р°С‚Рµ, Р° РЅРµ С‚РѕР»СЊРєРѕ РІ authansw ?
 			}
-			else // если ответ не 'no', то первая его строка - текущее время:
+			else // РµСЃР»Рё РѕС‚РІРµС‚ РЅРµ 'no', С‚Рѕ РїРµСЂРІР°СЏ РµРіРѕ СЃС‚СЂРѕРєР° - С‚РµРєСѓС‰РµРµ РІСЂРµРјСЏ:
 			{ 	t = vt;
 				ChatAppend(vdata);
 				if(authorized)
-					UpdateChat(); // и тут же пошлём следующий запрос
+					UpdateChat(); // Рё С‚СѓС‚ Р¶Рµ РїРѕС€Р»С‘Рј СЃР»РµРґСѓСЋС‰РёР№ Р·Р°РїСЂРѕСЃ
 			};
 		},
 		error: function(e){
 			console.log("err");
-			setTimeout(UpdateChat, 20000);  // повтор по таймеру через 20 секунд
-			ChatAppend("Нет связи с хабом");
+			setTimeout(UpdateChat, 20000);  // РїРѕРІС‚РѕСЂ РїРѕ С‚Р°Р№РјРµСЂСѓ С‡РµСЂРµР· 20 СЃРµРєСѓРЅРґ
+			ChatAppend("РќРµС‚ СЃРІСЏР·Рё СЃ С…Р°Р±РѕРј");
 		},
 		dataType: "html"
 	  });
@@ -412,31 +412,31 @@ function UpdateChat() {
 
 function sm(mes) {
 
-	document.all.ChBxScr.checked = true; // при отправке сообщения прокрутку надо вернуть всегда
+	document.all.ChBxScr.checked = true; // РїСЂРё РѕС‚РїСЂР°РІРєРµ СЃРѕРѕР±С‰РµРЅРёСЏ РїСЂРѕРєСЂСѓС‚РєСѓ РЅР°РґРѕ РІРµСЂРЅСѓС‚СЊ РІСЃРµРіРґР°
 
-	mes = mes.trim(); // всё же обрежем пробелы вокруг сообщения
+	mes = mes.trim(); // РІСЃС‘ Р¶Рµ РѕР±СЂРµР¶РµРј РїСЂРѕР±РµР»С‹ РІРѕРєСЂСѓРі СЃРѕРѕР±С‰РµРЅРёСЏ
 
-	if(mes=="") return; // пустым сообщением не нунжо флудить
+	if(mes=="") return; // РїСѓСЃС‚С‹Рј СЃРѕРѕР±С‰РµРЅРёРµРј РЅРµ РЅСѓРЅР¶Рѕ С„Р»СѓРґРёС‚СЊ
 	
 	if(mes[0]=='!')
 	{
-		if(mes=="!ы") { document.all.chatdiv.innerHTML=""; return; }; // special for Susl:
-		if(mes=="!игноры") {
+		if(mes=="!С‹") { document.all.chatdiv.innerHTML=""; return; }; // special for Susl:
+		if(mes=="!РёРіРЅРѕСЂС‹") {
 			var nstr = ""; 
 			for (var n in nicks) if(nicks[n]=="Hidden") nstr+= n + " ";
-			if(nstr!="") ChatAppend("<System> Список игнорируемых: " + nstr);
-					else ChatAppend("<System> Список игнорируемых ников пуст");
-			ChatAppend('<System> Команда отправки в игнор - "!игнор ник", вернуть из игнора - "!неигнор ник", посмотреть список игноров - "!игноры"');
+			if(nstr!="") ChatAppend("<System> РЎРїРёСЃРѕРє РёРіРЅРѕСЂРёСЂСѓРµРјС‹С…: " + nstr);
+					else ChatAppend("<System> РЎРїРёСЃРѕРє РёРіРЅРѕСЂРёСЂСѓРµРјС‹С… РЅРёРєРѕРІ РїСѓСЃС‚");
+			ChatAppend('<System> РљРѕРјР°РЅРґР° РѕС‚РїСЂР°РІРєРё РІ РёРіРЅРѕСЂ - "!РёРіРЅРѕСЂ РЅРёРє", РІРµСЂРЅСѓС‚СЊ РёР· РёРіРЅРѕСЂР° - "!РЅРµРёРіРЅРѕСЂ РЅРёРє", РїРѕСЃРјРѕС‚СЂРµС‚СЊ СЃРїРёСЃРѕРє РёРіРЅРѕСЂРѕРІ - "!РёРіРЅРѕСЂС‹"');
 			return;
 		};
-		if(mes.indexOf("!игнор")==0) { 
+		if(mes.indexOf("!РёРіРЅРѕСЂ")==0) { 
 			var n = mes.substring(6).trim(); 
-			if(n!="") { nicks[n]= "Hidden"; ChatAppend("<System> " + "Вы поставили в игнор ник "+n+ " (вернуть обратно - командой !неигнор " + n + ")"); };
+			if(n!="") { nicks[n]= "Hidden"; ChatAppend("<System> " + "Р’С‹ РїРѕСЃС‚Р°РІРёР»Рё РІ РёРіРЅРѕСЂ РЅРёРє "+n+ " (РІРµСЂРЅСѓС‚СЊ РѕР±СЂР°С‚РЅРѕ - РєРѕРјР°РЅРґРѕР№ !РЅРµРёРіРЅРѕСЂ " + n + ")"); };
 			return;
 		};
-		if(mes.indexOf("!неигнор")==0) { 
+		if(mes.indexOf("!РЅРµРёРіРЅРѕСЂ")==0) { 
 			var n = mes.substring(8).trim(); 
-			if(n!="") { if(nicks[n]=="Hidden") delete nicks[n]; ChatAppend("<System> " + "Вы убрали из игнора ник "+n+ " (вернуть обратно - командой !игнор " + n + ")"); };
+			if(n!="") { if(nicks[n]=="Hidden") delete nicks[n]; ChatAppend("<System> " + "Р’С‹ СѓР±СЂР°Р»Рё РёР· РёРіРЅРѕСЂР° РЅРёРє "+n+ " (РІРµСЂРЅСѓС‚СЊ РѕР±СЂР°С‚РЅРѕ - РєРѕРјР°РЅРґРѕР№ !РёРіРЅРѕСЂ " + n + ")"); };
 			return;
 		};
 	}
@@ -450,27 +450,27 @@ function sm(mes) {
 		// processData: false, 
 		success: function(data){
 			console.log(data);
-			// если пришлют "no" - предложить сменить ник или отправить запрос на переавторизацию?
+			// РµСЃР»Рё РїСЂРёС€Р»СЋС‚ "no" - РїСЂРµРґР»РѕР¶РёС‚СЊ СЃРјРµРЅРёС‚СЊ РЅРёРє РёР»Рё РѕС‚РїСЂР°РІРёС‚СЊ Р·Р°РїСЂРѕСЃ РЅР° РїРµСЂРµР°РІС‚РѕСЂРёР·Р°С†РёСЋ?
 			var vt = data
 			var i = data.indexOf("\r")
 			if(i>=0)
 			{ 	var vt = data.substring(0,i);
-				var vdata = data.substring(i+2); // пропускаем \r\n\
-				if( vdata!="") // если на наше сообщение ответили приватным - покажем его в чате:
-					// ChatAppend("post answ: " + vdata+"\r\n"); // хотя лучше бы цветом ещё выделить
-					ChatAppend("<System> " + vdata+"\r\n"); // хотя лучше бы цветом ещё выделить
+				var vdata = data.substring(i+2); // РїСЂРѕРїСѓСЃРєР°РµРј \r\n\
+				if( vdata!="") // РµСЃР»Рё РЅР° РЅР°С€Рµ СЃРѕРѕР±С‰РµРЅРёРµ РѕС‚РІРµС‚РёР»Рё РїСЂРёРІР°С‚РЅС‹Рј - РїРѕРєР°Р¶РµРј РµРіРѕ РІ С‡Р°С‚Рµ:
+					// ChatAppend("post answ: " + vdata+"\r\n"); // С…РѕС‚СЏ Р»СѓС‡С€Рµ Р±С‹ С†РІРµС‚РѕРј РµС‰С‘ РІС‹РґРµР»РёС‚СЊ
+					ChatAppend("<System> " + vdata+"\r\n"); // С…РѕС‚СЏ Р»СѓС‡С€Рµ Р±С‹ С†РІРµС‚РѕРј РµС‰С‘ РІС‹РґРµР»РёС‚СЊ
 			};
-			if(vt!="ok") // если в первой строке ответа не ок - наше сообщение не пускают
-			{ /* какая-то неочевидная функция, скорее даже лишняя
-				memmes = mes; // попробуем запомнить сообщение для повторной отправки
-			  authorized = false; // для быстрой переавторизации если выкидывало по таймеру
-			  sauth(document.getElementById("nick").value);  // и авторизоваться ещё раз
+			if(vt!="ok") // РµСЃР»Рё РІ РїРµСЂРІРѕР№ СЃС‚СЂРѕРєРµ РѕС‚РІРµС‚Р° РЅРµ РѕРє - РЅР°С€Рµ СЃРѕРѕР±С‰РµРЅРёРµ РЅРµ РїСѓСЃРєР°СЋС‚
+			{ /* РєР°РєР°СЏ-С‚Рѕ РЅРµРѕС‡РµРІРёРґРЅР°СЏ С„СѓРЅРєС†РёСЏ, СЃРєРѕСЂРµРµ РґР°Р¶Рµ Р»РёС€РЅСЏСЏ
+				memmes = mes; // РїРѕРїСЂРѕР±СѓРµРј Р·Р°РїРѕРјРЅРёС‚СЊ СЃРѕРѕР±С‰РµРЅРёРµ РґР»СЏ РїРѕРІС‚РѕСЂРЅРѕР№ РѕС‚РїСЂР°РІРєРё
+			  authorized = false; // РґР»СЏ Р±С‹СЃС‚СЂРѕР№ РїРµСЂРµР°РІС‚РѕСЂРёР·Р°С†РёРё РµСЃР»Рё РІС‹РєРёРґС‹РІР°Р»Рѕ РїРѕ С‚Р°Р№РјРµСЂСѓ
+			  sauth(document.getElementById("nick").value);  // Рё Р°РІС‚РѕСЂРёР·РѕРІР°С‚СЊСЃСЏ РµС‰С‘ СЂР°Р·
 				*/
 			} else memmes = "";
 		},
 		error: function(e){
 			console.log("mes-err");
-			ChatAppend("Нет ответа на отправку сообщения");
+			ChatAppend("РќРµС‚ РѕС‚РІРµС‚Р° РЅР° РѕС‚РїСЂР°РІРєСѓ СЃРѕРѕР±С‰РµРЅРёСЏ");
 		},
 		dataType: "html"
 	  }); 
@@ -496,20 +496,20 @@ function sauth(mes){
 		//timeout: '27000',
 		success: function(data){
 				console.log("auth-yes");
-				//ChatAppend("auth answ: " + data+"\r\n"); // покажем ответ на запрос авторизации as is (цветом бы выделить)
-				ChatAppend("<System> Авторизация:" + data+"\r\n"); // покажем ответ на запрос авторизации as is (цветом бы выделить)
+				//ChatAppend("auth answ: " + data+"\r\n"); // РїРѕРєР°Р¶РµРј РѕС‚РІРµС‚ РЅР° Р·Р°РїСЂРѕСЃ Р°РІС‚РѕСЂРёР·Р°С†РёРё as is (С†РІРµС‚РѕРј Р±С‹ РІС‹РґРµР»РёС‚СЊ)
+				ChatAppend("<System> РђРІС‚РѕСЂРёР·Р°С†РёСЏ:" + data+"\r\n"); // РїРѕРєР°Р¶РµРј РѕС‚РІРµС‚ РЅР° Р·Р°РїСЂРѕСЃ Р°РІС‚РѕСЂРёР·Р°С†РёРё as is (С†РІРµС‚РѕРј Р±С‹ РІС‹РґРµР»РёС‚СЊ)
 				authorized = (data=="ok")
 				if(authorized) 
-				{ 	if(memmes!="") sm(memmes); // отправим запомненное (неочевидное поведение?)
+				{ 	if(memmes!="") sm(memmes); // РѕС‚РїСЂР°РІРёРј Р·Р°РїРѕРјРЅРµРЅРЅРѕРµ (РЅРµРѕС‡РµРІРёРґРЅРѕРµ РїРѕРІРµРґРµРЅРёРµ?)
 					authNick = mes;
-					localSett.nick = authNick; //запоминать надо только успешно авторизованный ник
-					localSett.pass = aquery.p; // и пароль (как бы его потом стереть ещё)
-					document.getElementById('authansw').innerHTML = "        "; // "Вы вошли под ником "+authNick;
-					//document.getElementById('authansw').innerHTML = "Вы вошли под ником <span style='color:" + aColor + "'>"+authNick +"</span>";
+					localSett.nick = authNick; //Р·Р°РїРѕРјРёРЅР°С‚СЊ РЅР°РґРѕ С‚РѕР»СЊРєРѕ СѓСЃРїРµС€РЅРѕ Р°РІС‚РѕСЂРёР·РѕРІР°РЅРЅС‹Р№ РЅРёРє
+					localSett.pass = aquery.p; // Рё РїР°СЂРѕР»СЊ (РєР°Рє Р±С‹ РµРіРѕ РїРѕС‚РѕРј СЃС‚РµСЂРµС‚СЊ РµС‰С‘)
+					document.getElementById('authansw').innerHTML = "        "; // "Р’С‹ РІРѕС€Р»Рё РїРѕРґ РЅРёРєРѕРј "+authNick;
+					//document.getElementById('authansw').innerHTML = "Р’С‹ РІРѕС€Р»Рё РїРѕРґ РЅРёРєРѕРј <span style='color:" + aColor + "'>"+authNick +"</span>";
 					document.getElementById('you').innerHTML = "<b style='color:" + aColor + "'>"+authNick +"</b>";
 					document.getElementById('send').focus();
-					UpdateChat(); // успешная авторизация - повод запросить состояние чата
-					UpdateUsers(); // раз мы решили что юзеры тоже только при авторизации
+					UpdateChat(); // СѓСЃРїРµС€РЅР°СЏ Р°РІС‚РѕСЂРёР·Р°С†РёСЏ - РїРѕРІРѕРґ Р·Р°РїСЂРѕСЃРёС‚СЊ СЃРѕСЃС‚РѕСЏРЅРёРµ С‡Р°С‚Р°
+					UpdateUsers(); // СЂР°Р· РјС‹ СЂРµС€РёР»Рё С‡С‚Рѕ СЋР·РµСЂС‹ С‚РѕР¶Рµ С‚РѕР»СЊРєРѕ РїСЂРё Р°РІС‚РѕСЂРёР·Р°С†РёРё
 				} else
 				{	document.getElementById('authansw').innerHTML = data; };
 				onAuthChange();
@@ -517,8 +517,8 @@ function sauth(mes){
 		},
 		error: function(e){
 			console.log("auth-err");
-			//ChatAppend("Нет ответа на запрос авторизации");
-			ChatAppend("<System> " + "Нет ответа на запрос авторизации");
+			//ChatAppend("РќРµС‚ РѕС‚РІРµС‚Р° РЅР° Р·Р°РїСЂРѕСЃ Р°РІС‚РѕСЂРёР·Р°С†РёРё");
+			ChatAppend("<System> " + "РќРµС‚ РѕС‚РІРµС‚Р° РЅР° Р·Р°РїСЂРѕСЃ Р°РІС‚РѕСЂРёР·Р°С†РёРё");
 			setAuthEnabled(true);
 		},
 		dataType: "html"
@@ -526,8 +526,8 @@ function sauth(mes){
 }
 
 function squit(){
-	authorized = false; //независимо от ответа сервера выход означает прекратить запросы
-	onAuthChange(); // и показать панельку авторизации
+	authorized = false; //РЅРµР·Р°РІРёСЃРёРјРѕ РѕС‚ РѕС‚РІРµС‚Р° СЃРµСЂРІРµСЂР° РІС‹С…РѕРґ РѕР·РЅР°С‡Р°РµС‚ РїСЂРµРєСЂР°С‚РёС‚СЊ Р·Р°РїСЂРѕСЃС‹
+	onAuthChange(); // Рё РїРѕРєР°Р·Р°С‚СЊ РїР°РЅРµР»СЊРєСѓ Р°РІС‚РѕСЂРёР·Р°С†РёРё
 	// authNick = "";
 	var qquery = { n:authNick };
 	$.ajax({
@@ -537,12 +537,12 @@ function squit(){
 		dataType: 'text',
 		success: function(data) {
 			console.log("quit-yes: " + data);
-			document.getElementById('authansw').innerHTML = "";//data; // можно показать ответ на случай выхода с чужого ника 
+			document.getElementById('authansw').innerHTML = "";//data; // РјРѕР¶РЅРѕ РїРѕРєР°Р·Р°С‚СЊ РѕС‚РІРµС‚ РЅР° СЃР»СѓС‡Р°Р№ РІС‹С…РѕРґР° СЃ С‡СѓР¶РѕРіРѕ РЅРёРєР° 
 			document.getElementById('you').innerHTML = "?";
 		},
 		error: function(e) {
 			console.log("quit-err");
-			ChatAppend("Нет ответа на запрос выхода");
+			ChatAppend("РќРµС‚ РѕС‚РІРµС‚Р° РЅР° Р·Р°РїСЂРѕСЃ РІС‹С…РѕРґР°");
 		}
 	});
 }
@@ -553,7 +553,7 @@ function onAuthChange()
 	
 	if(authorized)
 	{
-		document.getElementById('ButtonAuth').value = "Выйти";
+		document.getElementById('ButtonAuth').value = "Р’С‹Р№С‚Рё";
 		document.getElementById("nick").style.display = "none";
 		document.getElementById("pass").style.display = "none";
 		document.getElementById("ButtonQuit").style.display = "block";
@@ -561,7 +561,7 @@ function onAuthChange()
 	}
 	else
 	{
-		document.getElementById('ButtonAuth').value = "Войти";
+		document.getElementById('ButtonAuth').value = "Р’РѕР№С‚Рё";
 		document.getElementById("nick").style.display = "block";
 		document.getElementById("pass").style.display = "block";
 		document.getElementById("ButtonQuit").style.display = "none";
@@ -578,13 +578,13 @@ function setStyle(newStyle) {
 		
 		localSett.styleName = newStyle;
 		
-		ChatAppend("Вы включили стиль "+newStyle);
+		ChatAppend("Р’С‹ РІРєР»СЋС‡РёР»Рё СЃС‚РёР»СЊ "+newStyle);
 	}
-	else ChatAppend("Вы запросили неизвестный стиль "+newStyle);
+	else ChatAppend("Р’С‹ Р·Р°РїСЂРѕСЃРёР»Рё РЅРµРёР·РІРµСЃС‚РЅС‹Р№ СЃС‚РёР»СЊ "+newStyle);
 }
 
-var hist = []; // массив всех отправленных соообщений
-var histIndex=-1; // индекс (при отправке ставится в hist.length)
+var hist = []; // РјР°СЃСЃРёРІ РІСЃРµС… РѕС‚РїСЂР°РІР»РµРЅРЅС‹С… СЃРѕРѕРѕР±С‰РµРЅРёР№
+var histIndex=-1; // РёРЅРґРµРєСЃ (РїСЂРё РѕС‚РїСЂР°РІРєРµ СЃС‚Р°РІРёС‚СЃСЏ РІ hist.length)
 
 
 function onLoadProc()
@@ -602,7 +602,7 @@ function onLoadProc()
 			return false;
 		}
 		
-		// работа с историей сообщений
+		// СЂР°Р±РѕС‚Р° СЃ РёСЃС‚РѕСЂРёРµР№ СЃРѕРѕР±С‰РµРЅРёР№
 		if(e==38) // up arrow
 		{	histIndex--; if(histIndex<0) histIndex = 0;
 			ts.value = hist[histIndex];
@@ -613,7 +613,7 @@ function onLoadProc()
 		if(e==40) // down arrow
 		{	histIndex++; // if(histIndex>=(hist.length-1)) histIndex = (hist.length-1);
 			if(histIndex>hist.length) histIndex = hist.length;
-			if(histIndex == hist.length) ts.value = ""; else  // последний переход вниз - пустая строка
+			if(histIndex == hist.length) ts.value = ""; else  // РїРѕСЃР»РµРґРЅРёР№ РїРµСЂРµС…РѕРґ РІРЅРёР· - РїСѓСЃС‚Р°СЏ СЃС‚СЂРѕРєР°
 			ts.value = hist[histIndex]; 
 			ts.focus(); //ts.setSelectionRange(0, ts.value.length);//ts.selectionStart=0; ts.selectionEnd = ts.value.length;
 			ts.selectionStart = ts.value.length;
@@ -669,7 +669,7 @@ function onLoadProc()
 		testScrool()
 		//document.all.chatdiv.scrollTop = document.all.chatdiv.scrollHeight;
 		bs.style.display = "none";
-		bs.value = "Прокрутка включена";
+		bs.value = "РџСЂРѕРєСЂСѓС‚РєР° РІРєР»СЋС‡РµРЅР°";
 		document.getElementById("send").focus();
 	};
 	*/
@@ -680,45 +680,45 @@ function onLoadProc()
 		setStyle(newStyle);
 	}
 	
-	// загрузка из локальных настроек:
+	// Р·Р°РіСЂСѓР·РєР° РёР· Р»РѕРєР°Р»СЊРЅС‹С… РЅР°СЃС‚СЂРѕРµРє:
 	lsYes = ('localStorage' in window) && window['localStorage']!==null;
 	if(lsYes) {
 		var savedSett = JSON.parse(localStorage.getItem('_AlfaVikaSett1'));
-		if(savedSett) localSett = savedSett; // если такого пункта ещё не существует
+		if(savedSett) localSett = savedSett; // РµСЃР»Рё С‚Р°РєРѕРіРѕ РїСѓРЅРєС‚Р° РµС‰С‘ РЅРµ СЃСѓС‰РµСЃС‚РІСѓРµС‚
 		tn.value = localSett.nick;
-		if(localSett.pass) tp.value = localSett.pass; // или не надо пароль хранить вообще?
+		if(localSett.pass) tp.value = localSett.pass; // РёР»Рё РЅРµ РЅР°РґРѕ РїР°СЂРѕР»СЊ С…СЂР°РЅРёС‚СЊ РІРѕРѕР±С‰Рµ?
 		//setStyle(localSett.styleName);
 		for (var i=0; i<sl.options.length; i++)
 			if(sl.options[i].value==localSett.styleName) sl.options[i].selected = true;
-		sl.onchange(); // обработчик select-а надо вызывать явно
+		sl.onchange(); // РѕР±СЂР°Р±РѕС‚С‡РёРє select-Р° РЅР°РґРѕ РІС‹Р·С‹РІР°С‚СЊ СЏРІРЅРѕ
 		
-		if(localSett.nicks) //загружаем индивидуальные настройки ников
+		if(localSett.nicks) //Р·Р°РіСЂСѓР¶Р°РµРј РёРЅРґРёРІРёРґСѓР°Р»СЊРЅС‹Рµ РЅР°СЃС‚СЂРѕР№РєРё РЅРёРєРѕРІ
 		for (var key in localSett.nicks) {
-			if(nicks[key]) continue; // захардкоренные в скрипте имеют приоритет
+			if(nicks[key]) continue; // Р·Р°С…Р°СЂРґРєРѕСЂРµРЅРЅС‹Рµ РІ СЃРєСЂРёРїС‚Рµ РёРјРµСЋС‚ РїСЂРёРѕСЂРёС‚РµС‚
 			nicks[key] = localSett.nicks[key];
 		};
 	}
 	
-	// действия при закрытии или обновлении окна:
+	// РґРµР№СЃС‚РІРёСЏ РїСЂРё Р·Р°РєСЂС‹С‚РёРё РёР»Рё РѕР±РЅРѕРІР»РµРЅРёРё РѕРєРЅР°:
 	window.onbeforeunload = function (e) { 
-		if(authorized) // закрытие страницы считается выходом
+		if(authorized) // Р·Р°РєСЂС‹С‚РёРµ СЃС‚СЂР°РЅРёС†С‹ СЃС‡РёС‚Р°РµС‚СЃСЏ РІС‹С…РѕРґРѕРј
 			squit();
 		if(lsYes) {
-			localSett.nicks = nicks; // сохраняем настройки для ников
+			localSett.nicks = nicks; // СЃРѕС…СЂР°РЅСЏРµРј РЅР°СЃС‚СЂРѕР№РєРё РґР»СЏ РЅРёРєРѕРІ
 			localStorage.setItem('_AlfaVikaSett1', JSON.stringify(localSett));
 		}
 	}
 		
 	tn.focus();
 	
-	// UpdateChat(); // запускать цикл опроса чата наверное не нужно без авторизации
-	UpdateUsers(); // а вот узнать кто онлайн - так и быть, можно
+	// UpdateChat(); // Р·Р°РїСѓСЃРєР°С‚СЊ С†РёРєР» РѕРїСЂРѕСЃР° С‡Р°С‚Р° РЅР°РІРµСЂРЅРѕРµ РЅРµ РЅСѓР¶РЅРѕ Р±РµР· Р°РІС‚РѕСЂРёР·Р°С†РёРё
+	UpdateUsers(); // Р° РІРѕС‚ СѓР·РЅР°С‚СЊ РєС‚Рѕ РѕРЅР»Р°Р№РЅ - С‚Р°Рє Рё Р±С‹С‚СЊ, РјРѕР¶РЅРѕ
 }
 
 function setPswProc()
 {
-	var psw = window.prompt("Установите новый пароль", "");
-	if(psw==null) return; // если нажали "отмена" prompt возвращает null
+	var psw = window.prompt("РЈСЃС‚Р°РЅРѕРІРёС‚Рµ РЅРѕРІС‹Р№ РїР°СЂРѕР»СЊ", "");
+	if(psw==null) return; // РµСЃР»Рё РЅР°Р¶Р°Р»Рё "РѕС‚РјРµРЅР°" prompt РІРѕР·РІСЂР°С‰Р°РµС‚ null
 	sm("!regmefast "+psw);
 	document.getElementById("pass").value = psw;
 }
@@ -733,7 +733,7 @@ function initMenu(){
 				ultags[t].style.top=ultags[t].parentNode.offsetHeight+csssubmenuoffset+"px"
 			var spanref=document.createElement("span")
 				spanref.className="arrowdiv"
-				spanref.innerHTML="    "
+				spanref.innerHTML="В В В В "
 				ultags[t].parentNode.getElementsByTagName("a")[0].appendChild(spanref)
 			ultags[t].parentNode.onmouseover=function(){
 						this.style.zIndex=100

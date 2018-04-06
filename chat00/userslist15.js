@@ -1,13 +1,13 @@
-// необязательный модуль отображения списка активных юзеров
-// требует наличия контейнера usersdiv, jquery, переменных apihost и authorized
-// возможна зависимость от настроек определённых в chat.js
-// точка входа - function UpdateUsers
+// РЅРµРѕР±СЏР·Р°С‚РµР»СЊРЅС‹Р№ РјРѕРґСѓР»СЊ РѕС‚РѕР±СЂР°Р¶РµРЅРёСЏ СЃРїРёСЃРєР° Р°РєС‚РёРІРЅС‹С… СЋР·РµСЂРѕРІ
+// С‚СЂРµР±СѓРµС‚ РЅР°Р»РёС‡РёСЏ РєРѕРЅС‚РµР№РЅРµСЂР° usersdiv, jquery, РїРµСЂРµРјРµРЅРЅС‹С… apihost Рё authorized
+// РІРѕР·РјРѕР¶РЅР° Р·Р°РІРёСЃРёРјРѕСЃС‚СЊ РѕС‚ РЅР°СЃС‚СЂРѕРµРє РѕРїСЂРµРґРµР»С‘РЅРЅС‹С… РІ chat.js
+// С‚РѕС‡РєР° РІС…РѕРґР° - function UpdateUsers
 
 function DrawSubList(list) {
 	for(var key in list) 
 	{	if(key=="count") continue;
 		$('#usersdiv').append("<p class="+ groups[gOfNick(key)].ns +" onclick='onNC(this);' >" + key + "</p>");
-		// когда-нибудь в list[key] будут какие-то параметры пользователя, а пока можем знать только, что он онлайн
+		// РєРѕРіРґР°-РЅРёР±СѓРґСЊ РІ list[key] Р±СѓРґСѓС‚ РєР°РєРёРµ-С‚Рѕ РїР°СЂР°РјРµС‚СЂС‹ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ, Р° РїРѕРєР° РјРѕР¶РµРј Р·РЅР°С‚СЊ С‚РѕР»СЊРєРѕ, С‡С‚Рѕ РѕРЅ РѕРЅР»Р°Р№РЅ
 	};
 	$('#usersdiv').append("<p>&nbsp;</p>");
 };
@@ -21,9 +21,9 @@ function DrawUserList(u) {
 	DrawSubList(u.ops);
 	$('#usersdiv').append("<b> DC users (" + u.dc.count +"): </b>");
 	DrawSubList(u.dc);
-	if(u.topic) { //upd от 21.07.2017
+	if(u.topic) { //upd РѕС‚ 21.07.2017
 		$('#authansw').html(u.topic);
-		document.title = "Альфа-хаб: " + u.topic;
+		document.title = "РђР»СЊС„Р°-С…Р°Р±: " + u.topic;
 	};
 	return;
 }
@@ -32,12 +32,12 @@ function UpdateUsers() {
 	$.getJSON(apihost+'api0/users.json')
 	.success(function(data) { 
 				DrawUserList(data);
-				if(authorized) setTimeout(UpdateUsers, 60000);  // повтор по таймеру
+				if(authorized) setTimeout(UpdateUsers, 60000);  // РїРѕРІС‚РѕСЂ РїРѕ С‚Р°Р№РјРµСЂСѓ
 			})
 	.error(function() { 
 				document.all.usersdiv.innerHTML = "<p>users err</p>"
-				if(authorized) setTimeout(UpdateUsers, 60000);  // повтор по таймеру
+				if(authorized) setTimeout(UpdateUsers, 60000);  // РїРѕРІС‚РѕСЂ РїРѕ С‚Р°Р№РјРµСЂСѓ
 			})
-	//.complete(function() { console.log("Завершение выполнения"); }); // аналог then
+	//.complete(function() { console.log("Р—Р°РІРµСЂС€РµРЅРёРµ РІС‹РїРѕР»РЅРµРЅРёСЏ"); }); // Р°РЅР°Р»РѕРі then
 	;
 }

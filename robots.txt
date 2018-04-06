@@ -1,0 +1,5 @@
+User-Agent: *
+Disallow: /img/t/
+Disallow: /img/test/
+Disallow: /test/
+Host: alfavika.ru
